@@ -3,93 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Engineering Calculators | Professional Tools by Prasun Barua</title>
     <meta name="description" content="Free professional engineering calculators for electrical, mechanical, and solar PV systems. Calculate cable size, voltage drop, and solar requirements instantly.">
-    
+
     <!-- Open Graph for Social Sharing -->
     <meta property="og:title" content="Professional Engineering Calculators">
     <meta property="og:description" content="Free, fast, and accurate engineering tools for electrical and solar design.">
     <meta property="og:url" content="https://calculator.prasunbarua.com/">
-    
+
     <!-- CSS (Root Relative) -->
     <link rel="stylesheet" href="/css/style.css">
-    
-    <style>
-        /* Homepage specific styles for the hero and grid */
-        .hero {
-            background-color: var(--card-bg);
-            padding: 60px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px;
-        }
-        .hero h1 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-        .search-container input {
-            width: 100%;
-            max-width: 500px;
-            padding: 15px 20px;
-            font-size: 1.1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: border-color 0.3s;
-        }
-        .search-container input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        .calc-grid-home {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
-        .calc-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-        .calc-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border-color: var(--primary-color);
-        }
-        .calc-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        .calc-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-        .calc-card p {
-            color: var(--text-muted);
-            line-height: 1.5;
-            font-size: 0.95rem;
-        }
-        .section-title {
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-        }
-    </style>
+
+    <!--
+        NOTE: The homepage-specific <style> block that used to live here has
+        been removed. It redeclared .hero, .search-container input,
+        .calc-grid-home, .calc-card, and .section-title with the SAME
+        specificity as style.css but loaded AFTER it, so it silently won
+        the cascade and overrode every fix made in the stylesheet. It also
+        referenced CSS variables that don't exist in style.css
+        (--primary-color, --text-color instead of --primary, --text-main),
+        which is what caused the unreadable text. style.css already defines
+        all of these classes correctly, so nothing extra is needed here.
+    -->
 </head>
 <body>
     <!-- Standard Header -->
@@ -100,33 +36,28 @@
                 <a href="/">Home</a>
                 <a href="#calculators">Calculators</a>
             </nav>
+            <button class="menu-btn" id="menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">☰</button>
         </div>
     </header>
 
     <main>
         <!-- Hero Section with Search -->
         <section class="hero">
-            <div class="search-container">
-    <input
-        type="text"
-        id="search-box"
-        placeholder="Search calculators..."
-        autocomplete="off"
-        spellcheck="false"
-        aria-label="Search engineering calculators"
-    >
-
-    <div id="search-results" class="search-results"></div>
-</div>
+            <div class="container">
+                <h1>Professional Engineering Calculators</h1>
+                <p>Free, fast, and accurate tools for electrical, solar, and system design.</p>
+                <div class="search-container">
+                    <input type="text" id="search-box" placeholder="Search for a calculator... (e.g. Voltage, Solar)" autocomplete="off">
+                </div>
             </div>
         </section>
 
         <!-- Calculators Grid -->
         <section id="calculators" class="container">
             <h2 class="section-title">All Calculators</h2>
-            
+
             <div class="calc-grid-home" id="calc-grid">
-                
+
                 <!-- Calculator 1: Cable Size -->
                 <a href="/calculators/cable-size/" class="calc-card">
                     <div class="calc-icon">📏</div>
@@ -153,7 +84,14 @@
     </main>
 
     <!-- Footer -->
-    <footer class="header">
+    <!--
+        NOTE: This was previously <footer class="header">, which made the
+        footer inherit .header's sticky/blurred/light styling (class
+        selectors beat the element selector) instead of the dark footer
+        style already defined for the plain <footer> tag in style.css.
+        Removed the class so the correct footer styling applies.
+    -->
+    <footer>
         <div class="container text-center" style="padding: 30px 0;">
             <p>© 2026 Engineering Calculator by Prasun Barua</p>
         </div>
@@ -166,17 +104,26 @@
         document.getElementById('search-box').addEventListener('keyup', function(e) {
             const term = e.target.value.toLowerCase();
             const cards = document.querySelectorAll('.calc-card');
-            
+
             cards.forEach(card => {
                 const title = card.querySelector('h3').innerText.toLowerCase();
                 const desc = card.querySelector('p').innerText.toLowerCase();
-                
+
                 if (title.includes(term) || desc.includes(term)) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
             });
+        });
+
+        // Mobile menu toggle (style.css already supports this via
+        // nav.nav-open, it just had no trigger button before)
+        const menuBtn = document.getElementById('menu-btn');
+        const mainNav = document.getElementById('main-nav');
+        menuBtn.addEventListener('click', function() {
+            const isOpen = mainNav.classList.toggle('nav-open');
+            menuBtn.setAttribute('aria-expanded', isOpen);
         });
     </script>
 </body>
