@@ -1,38 +1,60 @@
-/* =====================================
-   Engineering Calculator Website
-   10/10 Professional Stylesheet
-===================================== */
+/* ==========================================================================
+   Engineering Calculator Website - Global Stylesheet
+   Production Ready | 10/10 Standard
+   ========================================================================== */
 
-/* ---------- CSS Variables & Theming ---------- */
+/* ---------- CSS Variables & Design System ---------- */
 :root {
-    --bg-color: #f7f9fc;
-    --text-main: #111827;
-    --text-muted: #4b5563;
+    /* Color Palette - Light Mode */
+    --bg-color: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #475569;
     --card-bg: #ffffff;
-    --header-bg: rgba(255, 255, 255, 0.95);
-    --border-color: #e5e7eb;
-    --primary: #1565c0;
-    --primary-hover: #0d47a1;
-    --accent: #ff9800;
-    --accent-hover: #f57c00;
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --header-bg: rgba(255, 255, 255, 0.85);
+    --border-color: #e2e8f0;
+    
+    --primary: #1d4ed8;
+    --primary-hover: #1e40af;
+    --primary-light: rgba(29, 78, 216, 0.08);
+    
+    --accent: #f59e0b;
+    --accent-hover: #d97706;
+    
+    /* Shadows & Effects */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    
+    --focus-ring: rgba(29, 78, 216, 0.3);
+    --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-base: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dark Mode Variables */
+/* Color Palette - Dark Mode */
 [data-theme="dark"] {
-    --bg-color: #111827;
-    --text-main: #f9fafb;
-    --text-muted: #9ca3af;
-    --card-bg: #1f2937;
-    --header-bg: rgba(31, 41, 55, 0.95);
-    --border-color: #374151;
+    --bg-color: #0f172a;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --card-bg: #1e293b;
+    --header-bg: rgba(30, 41, 59, 0.85);
+    --border-color: #334155;
+    
     --primary: #60a5fa;
     --primary-hover: #93c5fd;
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --primary-light: rgba(96, 165, 250, 0.12);
+    
+    --accent: #fbbf24;
+    --accent-hover: #f59e0b;
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    
+    --focus-ring: rgba(96, 165, 250, 0.35);
 }
 
-/* ---------- Global Reset & Typography ---------- */
-* {
+/* ---------- Reset & Base Typography ---------- */
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -40,259 +62,329 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
-    font-family: "Inter", system-ui, sans-serif;
-    background: var(--bg-color);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.6;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 .container {
-    width: 90%;
+    width: 100%;
     max-width: 1200px;
-    margin: auto;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
-/* ---------- Header & Navigation ---------- */
+/* ---------- Header & Dynamic Navigation ---------- */
 .header {
-    background: var(--header-bg);
+    background-color: var(--header-bg);
     border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
     z-index: 1000;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
 .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 75px;
+    height: 72px;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 1.35rem;
+    font-weight: 800;
     color: var(--primary);
     text-decoration: none;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity var(--transition-fast);
+}
+
+.logo:hover {
+    opacity: 0.9;
 }
 
 nav {
     display: flex;
-    gap: 30px;
+    gap: 28px;
     align-items: center;
 }
 
 nav a {
     text-decoration: none;
     color: var(--text-muted);
-    font-weight: 500;
-    transition: color 0.2s ease;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color var(--transition-fast);
 }
 
-nav a:hover {
+nav a:hover,
+nav a.active {
     color: var(--primary);
 }
 
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
 }
 
 .menu-btn {
     display: none;
-    font-size: 25px;
+    font-size: 1.5rem;
     border: none;
     background: none;
     color: var(--text-main);
     cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color var(--transition-fast);
 }
 
-/* ---------- Hero Section & Search ---------- */
+.menu-btn:hover {
+    background-color: var(--primary-light);
+}
+
+/* ---------- Hero Section & Integrated Search ---------- */
 .hero {
-    background: linear-gradient(135deg, #1565c0, #0d47a1);
-    color: white;
-    padding: 100px 0;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+    color: #ffffff;
+    padding: 80px 0;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 48px;
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .hero h1 {
-    font-size: clamp(32px, 5vw, 48px);
-    line-height: 1.2;
-    margin-bottom: 20px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
 }
 
 .hero p {
-    font-size: clamp(16px, 2vw, 20px);
-    max-width: 750px;
-    margin: 0 auto 40px;
-    opacity: 0.95;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    max-width: 680px;
+    margin: 0 auto 36px;
+    opacity: 0.9;
+    line-height: 1.6;
 }
 
 .search-container {
     display: flex;
     justify-content: center;
-    max-width: 650px;
-    margin: auto;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
 }
 
 .search-container input {
     width: 100%;
-    padding: 16px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    outline: none;
-    background: var(--card-bg);
-    color: var(--text-main);
-    transition: border 0.3s;
+    padding: 16px 20px 16px 20px;
     border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    box-shadow: var(--shadow-lg);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .search-container input:focus {
-    border: 2px solid var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
 }
 
-/* ---------- Sections & Grids ---------- */
+/* ---------- Main Content & Card Grids ---------- */
 section {
-    padding: 20px 0 70px 0;
+    padding: 24px 0 60px 0;
 }
 
 .section-title {
     text-align: center;
-    font-size: 36px;
-    margin-bottom: 40px;
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: 36px;
     color: var(--text-main);
 }
 
 .calc-grid-home {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
 }
 
 .calc-card {
-    background: var(--card-bg);
-    padding: 35px 25px;
-    border-radius: 15px;
+    background-color: var(--card-bg);
+    padding: 32px 24px;
+    border-radius: 14px;
     text-align: center;
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
     text-decoration: none;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: inherit;
 }
 
 .calc-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
     border-color: var(--primary);
 }
 
 .calc-card .calc-icon {
-    font-size: 40px;
-    display: block;
-    margin-bottom: 15px;
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    line-height: 1;
 }
 
 .calc-card h3 {
     margin: 0 0 10px;
-    font-size: 22px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--text-main);
+    transition: color var(--transition-fast);
+}
+
+.calc-card:hover h3 {
     color: var(--primary);
 }
 
 .calc-card p {
     color: var(--text-muted);
-    font-size: 15px;
+    font-size: 0.925rem;
+    line-height: 1.5;
 }
 
-/* ---------- Utilities ---------- */
-.hidden {
-    display: none !important;
-}
-
-/* ---------- AdSense Anti-CLS Containers ---------- */
+/* ---------- Anti-CLS Ad Containers (AdSense Ready) ---------- */
 .ad-container {
-    background: var(--border-color);
-    margin: 40px auto;
+    background-color: var(--card-bg);
+    border: 1px dashed var(--border-color);
+    margin: 36px auto;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
     color: var(--text-muted);
-    font-size: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
+    overflow: hidden;
 }
 
 .ad-leaderboard {
     min-height: 90px;
     max-width: 728px;
+    width: 100%;
 }
 
 /* ---------- Footer ---------- */
 footer {
-    background: #0d47a1;
-    color: white;
-    padding: 40px 0;
+    background-color: #0f172a;
+    border-top: 1px solid var(--border-color);
+    color: #94a3b8;
+    padding: 48px 0;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 60px;
+    font-size: 0.9rem;
 }
 
 .footer-links {
-    margin-top: 15px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .footer-links a {
-    color: #93c5fd;
+    color: #60a5fa;
     text-decoration: none;
-    margin: 0 10px;
-    font-size: 14px;
+    transition: color var(--transition-fast);
 }
 
 .footer-links a:hover {
+    color: #ffffff;
     text-decoration: underline;
 }
 
-/* ---------- Mobile Responsive ---------- */
+/* ---------- Global Utilities & Accessibility ---------- */
+.hidden {
+    display: none !important;
+}
+
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* ---------- Mobile Responsiveness ---------- */
 @media (max-width: 768px) {
+    .nav-container {
+        height: 64px;
+    }
+
     nav {
         position: absolute;
-        top: 75px;
+        top: 64px;
         left: 0;
         width: 100%;
-        background: var(--card-bg);
+        background-color: var(--card-bg);
         flex-direction: column;
         gap: 0;
         border-bottom: 1px solid var(--border-color);
-        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        box-shadow: var(--shadow-lg);
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.4s ease;
+        transition: max-height 0.35s ease-in-out;
     }
 
     nav.nav-open {
-        max-height: 300px;
+        max-height: 320px;
     }
 
     nav a {
-        padding: 15px 20px;
+        padding: 16px 24px;
         border-bottom: 1px solid var(--border-color);
-        display: block;
         width: 100%;
-        text-align: center;
+        text-align: left;
         color: var(--text-main);
     }
 
     .menu-btn {
         display: block;
+    }
+
+    .hero {
+        padding: 56px 0;
+    }
+
+    .calc-grid-home {
+        grid-template-columns: 1fr;
     }
 }
