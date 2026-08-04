@@ -17,28 +17,52 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================== */
 
     const calculators = [
-        {
-            id: "cable-size",
-            title: "Cable Size Calculator",
-            desc: "Calculate cable size based on current, length, and allowable voltage drop.",
-            icon: "⚡",
-            url: "/calculators/cable-size/"
-        },
-        {
-            id: "voltage-drop",
-            title: "Voltage Drop Calculator",
-            desc: "Calculate voltage loss in AC/DC electrical cables over distance.",
-            icon: "⚡",
-            url: "/calculators/voltage-drop/"
-        },
-        {
-            id: "solar-panel",
-            title: "Solar Panel Calculator",
-            desc: "Estimate solar PV system size, array output, and energy generation.",
-            icon: "☀️",
-            url: "/calculators/solar-panel/"
-        }
-    ];
+    {
+        id: "cable-size",
+        title: "Cable Size Calculator",
+        desc: "Calculate cable size based on current, cable length, installation method, and allowable voltage drop.",
+        icon: "⚡",
+        url: "/calculators/cable-size/"
+    },
+    {
+        id: "voltage-drop",
+        title: "Voltage Drop Calculator",
+        desc: "Calculate AC/DC cable voltage drop based on current, cable size, and distance.",
+        icon: "⚡",
+        url: "/calculators/voltage-drop/"
+    },
+    {
+        id: "solar-panel",
+        title: "Solar Panel Calculator",
+        desc: "Estimate solar PV system size, panel quantity, and expected daily energy generation.",
+        icon: "☀️",
+        url: "/calculators/solar-panel/"
+    },
+
+    /* Future calculators (currently unavailable) */
+
+    {
+        id: "battery-backup",
+        title: "Battery Backup Calculator",
+        desc: "Coming Soon",
+        icon: "🔋",
+        url: "#"
+    },
+    {
+        id: "ohms-law",
+        title: "Ohm's Law Calculator",
+        desc: "Coming Soon",
+        icon: "💡",
+        url: "#"
+    },
+    {
+        id: "inverter-sizing",
+        title: "Inverter Sizing Calculator",
+        desc: "Coming Soon",
+        icon: "🔌",
+        url: "#"
+    }
+];
 
 
     /* =====================================
@@ -50,31 +74,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderCards(data) {
 
-        if (!gridContainer) return;
+    if (!gridContainer) return;
 
-        gridContainer.innerHTML = data.map(calc => `
-            <a href="${calc.url}" class="card fade-in-scroll">
-                <span class="icon">${calc.icon}</span>
-                <h3>${calc.title}</h3>
-                <p>${calc.desc}</p>
-            </a>
-        `).join("");
+    gridContainer.innerHTML = data.map(calc => `
+        <a href="${calc.url}"
+           class="card fade-in-scroll ${calc.url === '#' ? 'disabled-card' : ''}">
 
-        if (noResultsMsg) {
-            if (data.length === 0) {
-                noResultsMsg.classList.remove("hidden");
-            } else {
-                noResultsMsg.classList.add("hidden");
+            <span class="icon">${calc.icon}</span>
+
+            <h3>${calc.title}</h3>
+
+            <p>${calc.desc}</p>
+
+            ${calc.url === '#'
+                ? '<span class="coming-soon">Coming Soon</span>'
+                : ''
             }
-        }
 
-        // Re-observe newly rendered cards
-        document.querySelectorAll(".fade-in-scroll").forEach(card => {
-            observer.observe(card);
-        });
+        </a>
+    `).join("");
+
+    if (noResultsMsg) {
+        if (data.length === 0) {
+            noResultsMsg.classList.remove("hidden");
+        } else {
+            noResultsMsg.classList.add("hidden");
+        }
     }
 
-    renderCards(calculators);
+    // Observe newly created cards
+    document.querySelectorAll(".fade-in-scroll").forEach(card => {
+        observer.observe(card);
+    });
+}
+
+renderCards(calculators);
 
 
     /* =====================================
