@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Cable Size Calculator (mm²) | Electrical Engineering Tools</title>
+    <meta name="description" content="Free professional cable size calculator. Determine the exact wire cross-sectional area (mm²) based on voltage drop, current, length, and material.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Cable Size Calculator | Engineering Tools">
+    <meta property="og:description" content="Calculate minimum cable size and voltage drop for DC, single-phase, and three-phase electrical systems.">
+    <meta property="og:url" content="https://calculator.prasunbarua.com/calculators/cable-size/">
+    
+    <!-- CSS (Root Relative) -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/calculator.css">
+
+    <!-- FAQ Schema for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do you calculate cable size?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cable size is calculated by determining the acceptable voltage drop, the load current, the length of the run, and the resistivity of the material (copper or aluminum)."
+        }
+      }]
+    }
+    </script>
+</head>
+<body>
+    <!-- Standard Header (Same as Homepage) -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo">⚡ Engineering Calc</a>
+            <nav id="main-nav">
+                <a href="/">Home</a>
+                <a href="/#calculators">Calculators</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Calculator Page Layout -->
+    <main class="container calculator-page">
+        
+        <!-- 1. Top Banner AdSense -->
+        <div class="ad-container ad-top">
+            <span class="ad-label">Advertisement</span>
+            <!-- Google AdSense tag here -->
+        </div>
+
+        <!-- 2. SEO H1 & Intro -->
+        <div class="calc-header">
+            <h1>Cable Size Calculator</h1>
+            <p>Calculate the minimum required cable cross-sectional area ($\text{mm}^2$) to ensure safe current carrying capacity and keep voltage drop within acceptable limits.</p>
+        </div>
+
+        <!-- 3. The Calculator UI -->
+        <div class="calculator-app" id="cable-size-app">
+            <form id="cable-form" class="calc-grid">
+                
+                <div class="input-group">
+                    <label for="system-type">System Type</label>
+                    <select id="system-type">
+                        <option value="dc">DC / Single Phase AC</option>
+                        <option value="ac3">Three Phase AC</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="material">Conductor Material</label>
+                    <select id="material">
+                        <option value="0.01724">Copper</option>
+                        <option value="0.0282">Aluminum</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="voltage">System Voltage (V)</label>
+                    <input type="number" id="voltage" value="230" required min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="current">Load Current (Amps)</label>
+                    <input type="number" id="current" value="20" required min="0.1" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="length">Cable Length (Meters)</label>
+                    <input type="number" id="length" value="50" required min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="volt-drop-percent">Allowable Voltage Drop (%)</label>
+                    <input type="number" id="volt-drop-percent" value="3" required min="0.1" max="10" step="0.1">
+                </div>
+
+                <button type="submit" class="calc-btn">Calculate Cable Size</button>
+            </form>
+
+            <!-- Results Section -->
+            <div class="calc-results hidden" id="results-container">
+                <div class="result-box primary-result">
+                    <h4>Recommended Standard Cable</h4>
+                    <span id="standard-size" class="result-value">--</span>
+                </div>
+                <div class="result-grid">
+                    <div class="result-box">
+                        <h4>Exact Minimum Area</h4>
+                        <span id="exact-area">--</span>
+                    </div>
+                    <div class="result-box">
+                        <h4>Actual Voltage Drop</h4>
+                        <span id="actual-drop">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Middle AdSense -->
+        <div class="ad-container ad-middle">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
+        <!-- 5. SEO Content: Formulas & Logic -->
+        <section class="seo-content">
+            <h2>How to Calculate Cable Size</h2>
+            <p>Sizing a cable correctly is crucial for electrical safety and efficiency. If a cable is too small, it will overheat and cause a severe voltage drop, leading to equipment failure. The cross-sectional area is determined primarily by the resistivity of the metal and the maximum allowable voltage drop.</p>
+            
+            <h3>The Voltage Drop Formula</h3>
+            <p>For standard electrical installations, the minimum cross-sectional area ($A$) is calculated using the following formulas.</p>
+            
+            <p><strong>For DC and Single-Phase AC Systems:</strong></p>
+            $$A = \frac{2 \cdot L \cdot I \cdot \rho}{V_d}$$
+            
+            <p><strong>For Three-Phase AC Systems:</strong></p>
+            $$A = \frac{\sqrt{3} \cdot L \cdot I \cdot \rho}{V_d}$$
+            
+            <p><strong>Where:</strong></p>
+            <ul>
+                <li><strong>$A$</strong> = Minimum cross-sectional area in $\text{mm}^2$</li>
+                <li><strong>$L$</strong> = Length of the cable in meters</li>
+                <li><strong>$I$</strong> = Load current in Amps</li>
+                <li><strong>$\rho$</strong> = Resistivity of the conductor (Copper $\approx 0.01724$, Aluminum $\approx 0.0282$)</li>
+                <li><strong>$V_d$</strong> = Allowable voltage drop in Volts (e.g., $3\%$ of $230\text{V} = 6.9\text{V}$)</li>
+            </ul>
+        </section>
+
+        <!-- 6. FAQ Section -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>What is a standard acceptable voltage drop?</h3>
+                <p>According to most international electrical codes (like the NEC and IEC), a voltage drop of 3% is recommended for lighting circuits, and up to 5% is acceptable for other power and heating loads.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Should I choose Copper or Aluminum?</h3>
+                <p>Copper has lower resistivity and handles more current for the same physical size, making it standard for residential and commercial wiring. Aluminum is cheaper and lighter, often used for long-distance utility transmission lines or heavy industrial feeders.</p>
+            </div>
+        </section>
+
+        <!-- 7. Bottom AdSense -->
+        <div class="ad-container ad-bottom">
+            <span class="ad-label">Advertisement</span>
+        </div>
+    </main>
+
+    <footer class="header">
+        <div class="container text-center">
+            <p>© 2026 Engineering Calculator by Prasun Barua</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/theme.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
