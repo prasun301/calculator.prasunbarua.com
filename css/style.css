@@ -360,23 +360,3 @@ footer {
         width: 100%;
     }
 }
-
-.disabled-card {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-.disabled-card:hover {
-    transform: none;
-}
-
-.coming-soon {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 4px 10px;
-    background: #ff9800;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 20px;
-}
