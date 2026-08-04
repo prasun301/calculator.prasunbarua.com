@@ -1,1 +1,4 @@
+User-agent: *
+Allow: /
 
+Sitemap: https://calculator.prasunbarua.com/sitemap.xml
