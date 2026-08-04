@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Solar Panel Calculator | PV System Size & Generation Estimator</title>
+    <meta name="description" content="Free solar panel calculator. Estimate the required solar PV system size, number of panels, and daily energy generation based on your power consumption and location sunlight hours.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Solar Panel Calculator | Engineering Tools">
+    <meta property="og:description" content="Estimate solar PV system size, panel count, and daily energy output for your home or business.">
+    <meta property="og:url" content="https://calculator.prasunbarua.com/calculators/solar-panel/">
+    
+    <!-- CSS (Root Relative) -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/calculator.css">
+
+    <!-- FAQ Schema for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How many solar panels do I need for my house?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The number of solar panels depends on your average daily energy consumption in kWh, the peak sun hours in your region, and the wattage of the panels you select."
+        }
+      }]
+    }
+    </script>
+</head>
+<body>
+    <!-- Standard Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo">⚡ Engineering Calc</a>
+            <nav id="main-nav">
+                <a href="/">Home</a>
+                <a href="/#calculators">Calculators</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Calculator Page Layout -->
+    <main class="container calculator-page">
+        
+        <!-- Top Banner AdSense -->
+        <div class="ad-container ad-leaderboard">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
+        <!-- SEO H1 & Intro -->
+        <div class="calc-header">
+            <h1>Solar Panel Calculator</h1>
+            <p>Estimate the required solar PV system size (kW), total panel count, and expected daily generation to cover your electricity needs.</p>
+        </div>
+
+        <!-- Calculator UI -->
+        <div class="calculator-app" id="solar-panel-app">
+            <form id="solar-form" class="calc-grid">
+                
+                <div class="input-group">
+                    <label for="daily-energy">Daily Energy Consumption (kWh)</label>
+                    <input type="number" id="daily-energy" value="12" required min="0.1" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="sun-hours">Peak Sun Hours / Day (Hours)</label>
+                    <input type="number" id="sun-hours" value="4.5" required min="1" max="10" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="system-efficiency">System Efficiency Factor (%)</label>
+                    <input type="number" id="system-efficiency" value="75" required min="50" max="95" step="1">
+                    <small style="color: var(--text-muted); font-size: 11px; margin-top: 2px;">Accounts for inverter loss, dust, and temperature.</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="panel-wattage">Individual Panel Wattage (W)</label>
+                    <input type="number" id="panel-wattage" value="400" required min="100" max="700" step="10">
+                </div>
+
+                <button type="submit" class="calc-btn">Calculate Solar Requirements</button>
+            </form>
+
+            <!-- Results Section -->
+            <div class="calc-results hidden" id="results-container">
+                <div class="result-box primary-result">
+                    <h4>Required Solar Panels</h4>
+                    <span id="panel-count" class="result-value">--</span>
+                </div>
+                <div class="result-grid">
+                    <div class="result-box">
+                        <h4>System Size (kW)</h4>
+                        <span id="system-size">--</span>
+                    </div>
+                    <div class="result-box">
+                        <h4>Est. Daily Generation</h4>
+                        <span id="daily-gen">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle AdSense -->
+        <div class="ad-container ad-leaderboard">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
+        <!-- SEO Content -->
+        <section class="seo-content">
+            <h2>How to Size a Solar PV System</h2>
+            <p>Designing a reliable solar photovoltaic (PV) system starts with understanding your daily energy footprint. Utility bills usually show your monthly consumption in kilowatt-hours (kWh). Dividing this by 30 gives your average daily kWh requirement.</p>
+            
+            <h3>The Sizing Formula</h3>
+            <p>To account for environmental losses (such as inverter efficiency, wiring resistance, shading, and module temperature degradation), we apply an efficiency derate factor.</p>
+            
+            <p><code>System Size (kW) = [Daily Energy (kWh) / Peak Sun Hours] / (Efficiency %)</code></p>
+            <p><code>Number of Panels = [System Size (kW) * 1000] / Panel Wattage (W)</code></p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>What are Peak Sun Hours?</h3>
+                <p>Peak sun hours measure the intensity of sunlight. One peak sun hour equals 1,000 watts of photovoltaic power per square meter for one hour. It is different from standard daylight hours.</p>
+            </div>
+        </section>
+
+        <!-- Bottom AdSense -->
+        <div class="ad-container ad-leaderboard">
+            <span class="ad-label">Advertisement</span>
+        </div>
+    </main>
+
+    <footer class="header">
+        <div class="container text-center" style="padding: 20px 0;">
+            <p>© 2026 Engineering Calculator by Prasun Barua</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/theme.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
