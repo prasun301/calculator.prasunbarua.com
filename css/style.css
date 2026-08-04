@@ -12,19 +12,19 @@
     --card-bg: #ffffff;
     --header-bg: rgba(255, 255, 255, 0.85);
     --border-color: #e2e8f0;
-    
+
     --primary: #1d4ed8;
     --primary-hover: #1e40af;
     --primary-light: rgba(29, 78, 216, 0.08);
-    
+
     --accent: #f59e0b;
     --accent-hover: #d97706;
-    
+
     /* Shadows & Effects */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-    
+
     --focus-ring: rgba(29, 78, 216, 0.3);
     --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     --transition-base: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -38,18 +38,18 @@
     --card-bg: #1e293b;
     --header-bg: rgba(30, 41, 59, 0.85);
     --border-color: #334155;
-    
+
     --primary: #60a5fa;
     --primary-hover: #93c5fd;
     --primary-light: rgba(96, 165, 250, 0.12);
-    
+
     --accent: #fbbf24;
     --accent-hover: #f59e0b;
-    
+
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
-    
+
     --focus-ring: rgba(96, 165, 250, 0.35);
 }
 
@@ -158,75 +158,121 @@ nav a.active {
     background-color: var(--primary-light);
 }
 
-/* ---------- Hero Section & Bulletproof Search Box Fix ---------- */
+/* ---------- Hero Section & Integrated Search ---------- */
 .hero {
-    background: linear-gradient(135deg, #1d4ed8 0%, #0f172a 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+    color: #ffffff;
     padding: 80px 0;
     text-align: center;
     margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* subtle radial glow for depth, purely decorative */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.12), transparent 60%);
+    pointer-events: none;
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h1 {
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.25;
     letter-spacing: -0.025em;
     margin-bottom: 16px;
-    color: #ffffff !important;
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Forces crystal-clear white text with depth shadow */
+/* FIX: paragraph text was low-contrast (white @ 90% opacity) against the
+   blue gradient. Swapped to a solid, slightly cool off-white and added a
+   soft text-shadow so it stays readable on both ends of the gradient. */
 .hero p {
-    font-size: clamp(1rem, 2.2vw, 1.25netrem);
-    max-width: 700px;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    max-width: 680px;
     margin: 0 auto 36px;
-    color: #ffffff !important;
-    opacity: 1 !important;
-    font-weight: 400;
+    color: #eef2ff;
     line-height: 1.6;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    font-weight: 500;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.12);
 }
 
 .search-container {
     display: flex;
     justify-content: center;
-    max-width: 620px;
+    max-width: 600px;
     margin: 0 auto;
     position: relative;
 }
 
-/* Bulletproof search input overrides for all browsers (Chrome/Safari/Firefox) */
-.search-container input,
-.search-container input[type="text"],
-.search-container input[type="search"] {
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    width: 100% !important;
-    padding: 16px 24px !important;
-    border: 2px solid #cbd5e1 !important;
-    border-radius: 12px !important;
-    font-size: 1.05rem !important;
-    font-weight: 500 !important;
-    outline: none !important;
-    background-color: #ffffff !important;
-    color: #0f172a !important;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25) !important;
+.search-container input {
+    width: 100%;
+    padding: 16px 20px 16px 48px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    caret-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-/* Explicit placeholder contrast */
-.search-container input::placeholder,
-.search-container input[type="text"]::placeholder,
-.search-container input[type="search"]::placeholder {
-    color: #64748b !important;
-    opacity: 1 !important;
+/* FIX: explicit placeholder color. If left unstyled, some browsers/resets
+   render placeholder text near-white, which disappears on the white input
+   background described in the bug report. */
+.search-container input::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
 }
 
-.search-container input:focus,
-.search-container input[type="text"]:focus,
-.search-container input[type="search"]:focus {
-    border-color: #f59e0b !important;
-    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.25) !important;
+/* FIX: the classic cause of "white text on white input" is browser
+   autofill, which forces its own text/background colors (often white-on-
+   white) and ignores your normal color rules. This forces autofill to
+   respect the theme. */
+.search-container input:-webkit-autofill,
+.search-container input:-webkit-autofill:hover,
+.search-container input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-main);
+    -webkit-box-shadow: 0 0 0 1000px var(--card-bg) inset;
+    box-shadow: 0 0 0 1000px var(--card-bg) inset;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+.search-container input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
+}
+
+/* search icon, purely visual polish */
+.search-container::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    background-color: var(--text-muted);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") center / contain no-repeat;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") center / contain no-repeat;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* ---------- Main Content & Card Grids ---------- */
