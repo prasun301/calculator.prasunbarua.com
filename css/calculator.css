@@ -207,3 +207,8 @@
     color: #9ca3af;
     font-weight: 500;
 }
+.warning-text {
+    color: #ef4444;
+    font-size: 0.9em;
+    font-weight: 600;
+}
