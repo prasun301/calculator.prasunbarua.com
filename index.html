@@ -4,174 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Engineering Calculators | Professional Tools by Prasun Barua</title>
-    <meta name="description" content="Free professional engineering calculators for electrical, mechanical, and solar PV systems. Calculate cable size, voltage drop, and solar requirements instantly.">
+    <!-- Primary Meta Tags -->
+    <title>Engineering Calculator | Electrical, Solar PV & Energy Tools</title>
+    <meta name="title" content="Engineering Calculator | Electrical, Solar PV & Energy Tools">
+    <meta name="description" content="Free, professional engineering calculators for electrical design, solar PV systems, battery storage, and electronics. Fast, accurate, and easy to use.">
     
-    <!-- Open Graph for Social Sharing -->
-    <meta property="og:title" content="Professional Engineering Calculators">
-    <meta property="og:description" content="Free, fast, and accurate engineering tools for electrical and solar design.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
     <meta property="og:url" content="https://calculator.prasunbarua.com/">
+    <meta property="og:title" content="Engineering Calculator | Electrical & Solar Tools">
+    <meta property="og:description" content="Free, professional engineering calculators for electrical design, solar PV systems, and electronics.">
+    <meta property="og:image" content="https://calculator.prasunbarua.com/images/og-image.jpg">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- CSS (Root Relative) -->
-    <link rel="stylesheet" href="/css/style.css">
-    
-    <style>
-        /* Homepage specific styles for the hero and grid */
-        .hero {
-            background-color: var(--card-bg);
-            padding: 60px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px;
-        }
-        .hero h1 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-        .search-container input {
-            width: 100%;
-            max-width: 500px;
-            padding: 15px 20px;
-            font-size: 1.1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: border-color 0.3s;
-        }
-        .search-container input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        .calc-grid-home {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
-        .calc-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-        .calc-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border-color: var(--primary-color);
-        }
-        .calc-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        .calc-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-        .calc-card p {
-            color: var(--text-muted);
-            line-height: 1.5;
-            font-size: 0.95rem;
-        }
-        .section-title {
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-        }
-    </style>
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.png">
+
+    <!-- SEO Schema Markup (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Engineering Calculator",
+      "url": "https://calculator.prasunbarua.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://calculator.prasunbarua.com/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 </head>
 <body>
-    <!-- Standard Header -->
+
     <header class="header">
         <div class="container nav-container">
-            <a href="/" class="logo">⚡ Engineering Calc</a>
+            <a href="/" class="logo" aria-label="Home">
+                ⚡ Engineering Calc
+            </a>
+
             <nav id="main-nav">
                 <a href="/">Home</a>
                 <a href="#calculators">Calculators</a>
+                <a href="#categories">Categories</a>
+                <a href="#articles">Articles</a>
+                <a href="#about">About</a>
             </nav>
+
+            <div class="header-actions">
+                <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+                <button class="menu-btn" aria-label="Open Menu" aria-expanded="false">☰</button>
+            </div>
         </div>
     </header>
 
     <main>
-        <!-- Hero Section with Search -->
+        <!-- Hero Section -->
         <section class="hero">
             <div class="container">
-                <h1>Professional Engineering Calculators</h1>
-                <p>Free, fast, and accurate tools for electrical, solar, and system design.</p>
-                <div class="search-container">
-                    <input type="text" id="search-box" placeholder="Search for a calculator... (e.g. Voltage, Solar)">
+                <h1 class="animate-fade-up">Electrical Engineering & Solar PV Calculators</h1>
+                <p class="animate-fade-up" style="animation-delay: 0.1s;">Professional tools for engineers, technicians, students, and renewable energy professionals.</p>
+                
+                <div class="search animate-fade-up" style="animation-delay: 0.2s;">
+                    <input type="text" id="searchInput" placeholder="Search for a calculator... (e.g., Cable Size)" aria-label="Search calculators">
+                    <button type="button">Search</button>
                 </div>
             </div>
         </section>
 
-        <!-- Calculators Grid -->
+        <!-- AdSense Leaderboard (Reserved space prevents Layout Shift) -->
+        <div class="container ad-container ad-leaderboard">
+            <span class="ad-label">Advertisement</span>
+            <!-- Insert Google AdSense <ins> tag here -->
+        </div>
+
+        <!-- Categories Section -->
+        <section id="categories" class="container">
+            <h2 class="section-title">Calculator Categories</h2>
+            <div class="cards">
+                <div class="card fade-in-scroll">
+                    <span class="icon">⚡</span>
+                    <h3>Electrical</h3>
+                    <p>Power, cable sizing, voltage drop and design tools.</p>
+                </div>
+                <div class="card fade-in-scroll">
+                    <span class="icon">☀️</span>
+                    <h3>Solar PV</h3>
+                    <p>Solar sizing, inverter, battery and system calculations.</p>
+                </div>
+                <div class="card fade-in-scroll">
+                    <span class="icon">🔋</span>
+                    <h3>Energy Storage</h3>
+                    <p>Battery backup and energy storage calculations.</p>
+                </div>
+                <div class="card fade-in-scroll">
+                    <span class="icon">💡</span>
+                    <h3>Electronics</h3>
+                    <p>Ohm's law, resistor, capacitor and circuit logic.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Calculators Section -->
         <section id="calculators" class="container">
             <h2 class="section-title">All Calculators</h2>
+            <!-- JavaScript will inject the calculator cards here -->
+            <div class="cards" id="calculator-grid"></div>
             
-            <div class="calc-grid-home" id="calc-grid">
-                
-                <!-- Calculator 1: Cable Size -->
-                <a href="/calculators/cable-size/" class="calc-card">
-                    <div class="calc-icon">📏</div>
-                    <h3>Cable Size Calculator</h3>
-                    <p>Calculate electrical cable size based on load current, length, and allowable voltage drop.</p>
-                </a>
-
-                <!-- Calculator 2: Voltage Drop -->
-                <a href="/calculators/voltage-drop/" class="calc-card">
-                    <div class="calc-icon">📉</div>
-                    <h3>Voltage Drop Calculator</h3>
-                    <p>Determine exact voltage loss and percentage drop for AC, DC, and three-phase electrical systems.</p>
-                </a>
-
-                <!-- Calculator 3: Solar Panel -->
-                <a href="/calculators/solar-panel/" class="calc-card">
-                    <div class="calc-icon">☀️</div>
-                    <h3>Solar Panel Calculator</h3>
-                    <p>Estimate required solar PV system size (kW), total panel count, and expected daily generation.</p>
-                </a>
-
+            <!-- Empty state for search -->
+            <div id="no-results" class="hidden">
+                <p>No calculators found matching your search. Please try another term.</p>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="header">
-        <div class="container text-center" style="padding: 30px 0;">
+    <footer>
+        <div class="container">
             <p>© 2026 Engineering Calculator by Prasun Barua</p>
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact</a>
+            </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="/js/main.js"></script>
-    <script>
-        // Simple search functionality for the homepage
-        document.getElementById('search-box').addEventListener('keyup', function(e) {
-            const term = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.calc-card');
-            
-            cards.forEach(card => {
-                const title = card.querySelector('h3').innerText.toLowerCase();
-                const desc = card.querySelector('p').innerText.toLowerCase();
-                
-                if (title.includes(term) || desc.includes(term)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
