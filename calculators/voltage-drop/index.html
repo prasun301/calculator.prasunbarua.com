@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Voltage Drop Calculator | Electrical Engineering Tools</title>
+    <meta name="description" content="Free professional voltage drop calculator. Calculate exact voltage loss, percentage drop, and circuit performance for AC and DC electrical installations.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Voltage Drop Calculator | Engineering Tools">
+    <meta property="og:description" content="Calculate voltage loss and percentage drop for DC, single-phase, and three-phase electrical systems.">
+    <meta property="og:url" content="https://calculator.prasunbarua.com/calculators/voltage-drop/">
+    
+    <!-- CSS (Root Relative) -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/calculator.css">
+
+    <!-- FAQ Schema for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What is an acceptable voltage drop limit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For most standards, total voltage drop from the origin of installation to the load should not exceed 3% for lighting and 5% for power applications."
+        }
+      }]
+    }
+    </script>
+</head>
+<body>
+    <!-- Standard Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo">⚡ Engineering Calc</a>
+            <nav id="main-nav">
+                <a href="/">Home</a>
+                <a href="/#calculators">Calculators</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Calculator Page Layout -->
+    <main class="container calculator-page">
+        
+        <!-- Top Banner AdSense -->
+        <div class="ad-container ad-leaderboard">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
+        <!-- SEO H1 & Intro -->
+        <div class="calc-header">
+            <h1>Voltage Drop Calculator</h1>
+            <p>Determine the exact voltage loss and percentage drop across electrical cables based on length, current, wire size, and material.</p>
+        </div>
+
+        <!-- Calculator UI -->
+        <div class="calculator-app" id="voltage-drop-app">
+            <form id="vd-form" class="calc-grid">
+                
+                <div class="input-group">
+                    <label for="system-type">System Type</label>
+                    <select id="system-type">
+                        <option value="dc">DC / Single Phase AC</option>
+                        <option value="ac3">Three Phase AC</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="material">Conductor Material</label>
+                    <select id="material">
+                        <option value="0.01724">Copper</option>
+                        <option value="0.0282">Aluminum</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="voltage">System Voltage (V)</label>
+                    <input type="number" id="voltage" value="230" required min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="current">Load Current (Amps)</label>
+                    <input type="number" id="current" value="25" required min="0.1" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="length">Cable Length (Meters)</label>
+                    <input type="number" id="length" value="40" required min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="csa">Cable Size (mm²)</label>
+                    <input type="number" id="csa" value="6" required min="0.5" step="0.5">
+                </div>
+
+                <button type="submit" class="calc-btn">Calculate Voltage Drop</button>
+            </form>
+
+            <!-- Results Section -->
+            <div class="calc-results hidden" id="results-container">
+                <div class="result-box primary-result">
+                    <h4>Total Voltage Drop</h4>
+                    <span id="vd-volts" class="result-value">--</span>
+                </div>
+                <div class="result-grid">
+                    <div class="result-box">
+                        <h4>Voltage Drop Percentage</h4>
+                        <span id="vd-percent">--</span>
+                    </div>
+                    <div class="result-box">
+                        <h4>Circuit Status</h4>
+                        <span id="vd-status" style="font-size: 18px;">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle AdSense -->
+        <div class="ad-container ad-leaderboard">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
+        <!-- SEO Content -->
+        <section class="seo-content">
+            <h2>Understanding Voltage Drop</h2>
+            <p>Every electrical conductor has inherent resistance. As current flows through a wire over a distance, some electrical energy is converted into heat, resulting in a loss of voltage at the load end. Excessive voltage drop can cause motors to overheat, lights to dim, and sensitive equipment to malfunction.</p>
+            
+            <h3>The Formulas Used</h3>
+            <p><strong>Single-Phase / DC Circuits:</strong></p>
+            <p><code>Vd = (2 * L * I * rho) / A</code></p>
+            
+            <p><strong>Three-Phase Circuits:</strong></p>
+            <p><code>Vd = (sqrt(3) * L * I * rho) / A</code></p>
+            
+            <p><strong>Where:</strong></p>
+            <ul>
+                <li><strong>Vd</strong> = Voltage Drop in Volts</li>
+                <li><strong>L</strong> = Length of the one-way circuit in meters</li>
+                <li><strong>I</strong> = Load current in Amps</li>
+                <li><strong>rho</strong> = Conductor resistivity (Copper $\approx 0.01724$, Aluminum $\approx 0.0282$)</li>
+                <li><strong>A</strong> = Cross-sectional area of the cable in mm²</li>
+            </ul>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>How can I reduce voltage drop?</h3>
+                <p>You can reduce voltage drop by increasing the cable cross-sectional area (using a thicker wire), shortening the cable run length, or lowering the load current.</p>
+            </div>
+        </section>
+
+        <!-- Bottom AdSense -->
+        <div class="ad-container ad-leaderboard">
+            <span class="ad-label">Advertisement</span>
+        </div>
+    </main>
+
+    <footer class="header">
+        <div class="container text-center" style="padding: 20px 0;">
+            <p>© 2026 Engineering Calculator by Prasun Barua</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/theme.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
