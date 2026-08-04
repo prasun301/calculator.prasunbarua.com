@@ -1,111 +1,477 @@
+/* =====================================
+   Engineering Calculator Website
+   Main Stylesheet
+===================================== */
+
+
+/* ---------- Global Reset ---------- */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-body{
-    font-family:Arial,sans-serif;
-    background:#f5f7fa;
-    color:#222;
-    line-height:1.6;
+
+html{
+    scroll-behavior:smooth;
 }
+
+
+body{
+
+    font-family:
+    "Inter",
+    Arial,
+    sans-serif;
+
+    background:#f7f9fc;
+
+    color:#1f2937;
+
+    line-height:1.6;
+
+}
+
+
 
 .container{
+
     width:90%;
+
     max-width:1200px;
+
     margin:auto;
+
 }
 
-header{
-    background:#1565C0;
-    color:#fff;
-    padding:20px 0;
+
+
+/* ---------- Header ---------- */
+
+
+.header{
+
+    background:#ffffff;
+
+    border-bottom:1px solid #e5e7eb;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
 }
 
-header .container{
+
+
+.nav-container{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
+    height:75px;
+
 }
+
+
 
 .logo{
-    font-size:28px;
-    font-weight:bold;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#1565c0;
+
 }
+
+
+
+nav{
+
+    display:flex;
+
+    gap:30px;
+
+}
+
+
 
 nav a{
-    color:white;
+
     text-decoration:none;
-    margin-left:25px;
+
+    color:#374151;
+
+    font-weight:500;
+
+    transition:.3s;
+
 }
+
+
+
+nav a:hover{
+
+    color:#1565c0;
+
+}
+
+
+
+.menu-btn{
+
+    display:none;
+
+    font-size:25px;
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+/* ---------- Hero Section ---------- */
+
 
 .hero{
-    padding:80px 20px;
+
+    background:
+
+    linear-gradient(
+    135deg,
+    #1565c0,
+    #0d47a1
+    );
+
+    color:white;
+
+    padding:100px 0;
+
     text-align:center;
-    background:white;
+
 }
+
+
 
 .hero h1{
-    font-size:42px;
+
+    font-size:48px;
+
+    line-height:1.2;
+
     margin-bottom:20px;
+
 }
+
+
 
 .hero p{
+
     font-size:20px;
-    margin-bottom:30px;
+
+    max-width:750px;
+
+    margin:0 auto 40px;
+
+    opacity:.95;
+
 }
 
-.search-box{
+
+
+
+
+/* ---------- Search ---------- */
+
+
+.search{
+
     display:flex;
+
     justify-content:center;
-    gap:10px;
+
+    max-width:650px;
+
+    margin:auto;
+
 }
 
-.search-box input{
-    width:450px;
-    padding:14px;
-    border-radius:6px;
-    border:1px solid #ddd;
-}
 
-.search-box button{
-    background:#1565C0;
-    color:white;
+
+.search input{
+
+    flex:1;
+
+    padding:16px 20px;
+
     border:none;
-    padding:14px 25px;
-    border-radius:6px;
+
+    border-radius:8px 0 0 8px;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+
+
+.search button{
+
+    padding:16px 30px;
+
+    border:none;
+
+    background:#ff9800;
+
+    color:white;
+
+    font-weight:bold;
+
     cursor:pointer;
+
+    border-radius:0 8px 8px 0;
+
 }
 
-.categories,
-.featured{
+
+
+
+/* ---------- Sections ---------- */
+
+
+section{
+
     padding:70px 0;
+
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-    margin-top:30px;
+
+
+section h2{
+
+    text-align:center;
+
+    font-size:36px;
+
+    margin-bottom:40px;
+
+    color:#111827;
+
 }
+
+
+
+
+
+/* ---------- Cards ---------- */
+
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(
+    auto-fit,
+    minmax(260px,1fr)
+    );
+
+    gap:25px;
+
+}
+
+
 
 .card{
+
     background:white;
-    padding:35px;
-    border-radius:12px;
+
+    padding:35px 25px;
+
+    border-radius:15px;
+
     text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    box-shadow:
+
+    0 10px 30px
+    rgba(0,0,0,.08);
+
     transition:.3s;
+
 }
+
+
 
 .card:hover{
-    transform:translateY(-6px);
+
+    transform:translateY(-8px);
+
 }
 
-footer{
-    background:#0D47A1;
-    color:white;
+
+
+.card span{
+
+    font-size:40px;
+
+}
+
+
+
+.card h3{
+
+    margin:15px 0;
+
+    font-size:22px;
+
+    color:#1565c0;
+
+}
+
+
+
+.card p{
+
+    color:#6b7280;
+
+}
+
+
+
+
+
+/* ---------- Resources ---------- */
+
+
+#articles{
+
+    background:white;
+
     text-align:center;
-    padding:30px;
+
+}
+
+
+
+#articles p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    color:#6b7280;
+
+    font-size:18px;
+
+}
+
+
+
+
+
+/* ---------- Footer ---------- */
+
+
+footer{
+
+    background:#0d47a1;
+
+    color:white;
+
+    padding:35px 0;
+
+    text-align:center;
+
+}
+
+
+
+footer p{
+
+    margin:8px;
+
+}
+
+
+
+
+/* ---------- Mobile ---------- */
+
+
+@media(max-width:768px){
+
+
+nav{
+
+    display:none;
+
+}
+
+
+
+.menu-btn{
+
+    display:block;
+
+}
+
+
+
+.hero h1{
+
+    font-size:34px;
+
+}
+
+
+
+.hero p{
+
+    font-size:17px;
+
+}
+
+
+
+.search{
+
+    flex-direction:column;
+
+}
+
+
+
+.search input{
+
+    border-radius:8px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.search button{
+
+    border-radius:8px;
+
+}
+
+
+
 }
