@@ -1,175 +1,196 @@
 /* =====================================
    Engineering Calculator Website
-   Main JavaScript Architecture
+   Main JavaScript
+   Author: Prasun Barua
 ===================================== */
 
-// Professional Developer Signature
 console.log(
-    "%c⚡ Engineering Calculator %c\nSystem Initialized. Built by Prasun Barua.", 
-    "color: #1565c0; font-size: 20px; font-weight: bold; padding: 5px 0;", 
-    "color: #4b5563; font-size: 12px;"
+    "%c⚡ Engineering Calculator %c\nSystem Initialized. Built by Prasun Barua.",
+    "color:#1565c0;font-size:20px;font-weight:bold;",
+    "color:#4b5563;font-size:12px;"
 );
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // ==========================================
-    // 1. CALCULATOR DATABASE (Easy to scale to 500+)
-    // ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================
+       CALCULATOR DATABASE
+    ===================================== */
+
     const calculators = [
-        { 
-            id: 'cable-size',
-            title: "Cable Size Calculator", 
-            desc: "Calculate cable size based on current, length, and allowable voltage drop.", 
+        {
+            id: "cable-size",
+            title: "Cable Size Calculator",
+            desc: "Calculate cable size based on current, length, and allowable voltage drop.",
             icon: "⚡",
-            url: "#cable-size"
+            url: "/calculators/cable-size/"
         },
-        { 
-            id: 'voltage-drop',
-            title: "Voltage Drop Calculator", 
-            desc: "Calculate voltage loss in AC/DC electrical cables over distance.", 
+        {
+            id: "voltage-drop",
+            title: "Voltage Drop Calculator",
+            desc: "Calculate voltage loss in AC/DC electrical cables over distance.",
             icon: "⚡",
-            url: "#voltage-drop"
+            url: "/calculators/voltage-drop/"
         },
-        { 
-            id: 'solar-panel',
-            title: "Solar Panel Calculator", 
-            desc: "Estimate solar PV system size, array output, and energy generation.", 
+        {
+            id: "solar-panel",
+            title: "Solar Panel Calculator",
+            desc: "Estimate solar PV system size, array output, and energy generation.",
             icon: "☀️",
-            url: "#solar-panel"
-        },
-        { 
-            id: 'battery-backup',
-            title: "Battery Calculator", 
-            desc: "Calculate required battery capacity (Ah) for off-grid backup systems.", 
-            icon: "🔋",
-            url: "#battery-backup"
-        },
-        { 
-            id: 'ohms-law',
-            title: "Ohm's Law Calculator", 
-            desc: "Calculate Voltage, Current, Resistance, or Power instantly.", 
-            icon: "💡",
-            url: "#ohms-law"
-        },
-        { 
-            id: 'inverter-sizing',
-            title: "Inverter Sizing Calculator", 
-            desc: "Determine the correct inverter size for your peak load requirements.", 
-            icon: "☀️",
-            url: "#inverter-sizing"
+            url: "/calculators/solar-panel/"
         }
-        // Add hundreds more here...
     ];
 
-    // ==========================================
-    // 2. RENDER CALCULATORS TO DOM
-    // ==========================================
-    const gridContainer = document.getElementById('calculator-grid');
-    const noResultsMsg = document.getElementById('no-results');
+
+    /* =====================================
+       RENDER CALCULATOR CARDS
+    ===================================== */
+
+    const gridContainer = document.getElementById("calculator-grid");
+    const noResultsMsg = document.getElementById("no-results");
 
     function renderCards(data) {
+
+        if (!gridContainer) return;
+
         gridContainer.innerHTML = data.map(calc => `
-            <a href="${calc.url}" class="card fade-in-scroll visible">
+            <a href="${calc.url}" class="card fade-in-scroll">
                 <span class="icon">${calc.icon}</span>
                 <h3>${calc.title}</h3>
                 <p>${calc.desc}</p>
             </a>
-        `).join('');
+        `).join("");
 
-        // Toggle "No Results" message
-        if(data.length === 0) {
-            noResultsMsg.classList.remove('hidden');
-        } else {
-            noResultsMsg.classList.add('hidden');
+        if (noResultsMsg) {
+            if (data.length === 0) {
+                noResultsMsg.classList.remove("hidden");
+            } else {
+                noResultsMsg.classList.add("hidden");
+            }
         }
+
+        // Re-observe newly rendered cards
+        document.querySelectorAll(".fade-in-scroll").forEach(card => {
+            observer.observe(card);
+        });
     }
 
-    // Initial load
     renderCards(calculators);
 
 
-    // ==========================================
-    // 3. LIVE SEARCH FILTER
-    // ==========================================
-    const searchInput = document.getElementById('searchInput');
+    /* =====================================
+       LIVE SEARCH
+    ===================================== */
 
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase().trim();
-        
-        const filteredData = calculators.filter(calc => 
-            calc.title.toLowerCase().includes(searchTerm) || 
-            calc.desc.toLowerCase().includes(searchTerm)
-        );
-        
-        renderCards(filteredData);
-    });
+    const searchInput = document.getElementById("searchInput");
 
+    if (searchInput) {
 
-    // ==========================================
-    // 4. MOBILE MENU TOGGLE
-    // ==========================================
-    const menuBtn = document.querySelector('.menu-btn');
-    const nav = document.getElementById('main-nav');
+        searchInput.addEventListener("input", (e) => {
 
-    menuBtn.addEventListener('click', () => {
-        nav.classList.toggle('nav-open');
-        const isExpanded = nav.classList.contains('nav-open');
-        menuBtn.setAttribute('aria-expanded', isExpanded);
-        // Change icon to X when open
-        menuBtn.innerHTML = isExpanded ? '✕' : '☰'; 
-    });
+            const keyword = e.target.value.toLowerCase().trim();
 
+            const filtered = calculators.filter(calc =>
+                calc.title.toLowerCase().includes(keyword) ||
+                calc.desc.toLowerCase().includes(keyword)
+            );
 
-    // ==========================================
-    // 5. DARK / LIGHT MODE TOGGLE
-    // ==========================================
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
+            renderCards(filtered);
 
-    // Check LocalStorage first, then OS preference
-    const savedTheme = localStorage.getItem('theme');
-    const osPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && osPrefersDark)) {
-        htmlElement.setAttribute('data-theme', 'dark');
-        themeToggleBtn.innerHTML = '☀️';
+        });
+
     }
 
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        if (currentTheme === 'light') {
-            htmlElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-            themeToggleBtn.innerHTML = '☀️';
-        } else {
-            htmlElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-            themeToggleBtn.innerHTML = '🌙';
+
+    /* =====================================
+       MOBILE MENU
+    ===================================== */
+
+    const menuBtn = document.querySelector(".menu-btn");
+    const nav = document.getElementById("main-nav");
+
+    if (menuBtn && nav) {
+
+        menuBtn.addEventListener("click", () => {
+
+            nav.classList.toggle("nav-open");
+
+            const expanded = nav.classList.contains("nav-open");
+
+            menuBtn.setAttribute("aria-expanded", expanded);
+
+            menuBtn.innerHTML = expanded ? "✕" : "☰";
+
+        });
+
+    }
+
+
+    /* =====================================
+       DARK MODE
+    ===================================== */
+
+    const themeToggle = document.getElementById("theme-toggle");
+    const html = document.documentElement;
+
+    if (themeToggle) {
+
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+
+            html.setAttribute("data-theme", "dark");
+            themeToggle.textContent = "☀️";
+
         }
+
+        themeToggle.addEventListener("click", () => {
+
+            const current = html.getAttribute("data-theme");
+
+            if (current === "dark") {
+
+                html.setAttribute("data-theme", "light");
+                localStorage.setItem("theme", "light");
+                themeToggle.textContent = "🌙";
+
+            } else {
+
+                html.setAttribute("data-theme", "dark");
+                localStorage.setItem("theme", "dark");
+                themeToggle.textContent = "☀️";
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================
+       SCROLL ANIMATION
+    ===================================== */
+
+    const observer = new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.classList.add("visible");
+
+                observer.unobserve(entry.target);
+
+            }
+
+        });
+
+    }, {
+        threshold: 0.1
     });
 
-
-    // ==========================================
-    // 6. SCROLL ANIMATION (Intersection Observer)
-    // ==========================================
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // Only animate once
-            }
-        });
-    }, observerOptions);
-
-    // Observe category cards
-    document.querySelectorAll('.fade-in-scroll').forEach(el => {
-        observer.observe(el);
+    document.querySelectorAll(".fade-in-scroll").forEach(card => {
+        observer.observe(card);
     });
 
 });
