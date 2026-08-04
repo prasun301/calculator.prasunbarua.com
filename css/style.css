@@ -63,7 +63,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
-    backdrop-filter: blur(10px); /* Modern blur effect */
+    backdrop-filter: blur(10px);
 }
 
 .nav-container {
@@ -83,6 +83,7 @@ body {
 nav {
     display: flex;
     gap: 30px;
+    align-items: center;
 }
 
 nav a {
@@ -102,19 +103,6 @@ nav a:hover {
     gap: 15px;
 }
 
-#theme-toggle {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: var(--text-main);
-    transition: transform 0.2s;
-}
-
-#theme-toggle:hover {
-    transform: scale(1.1);
-}
-
 .menu-btn {
     display: none;
     font-size: 25px;
@@ -124,16 +112,17 @@ nav a:hover {
     cursor: pointer;
 }
 
-/* ---------- Hero Section ---------- */
+/* ---------- Hero Section & Search ---------- */
 .hero {
     background: linear-gradient(135deg, #1565c0, #0d47a1);
     color: white;
     padding: 100px 0;
     text-align: center;
+    margin-bottom: 50px;
 }
 
 .hero h1 {
-    font-size: clamp(32px, 5vw, 48px); /* Fluid typography */
+    font-size: clamp(32px, 5vw, 48px);
     line-height: 1.2;
     margin-bottom: 20px;
 }
@@ -145,8 +134,7 @@ nav a:hover {
     opacity: 0.95;
 }
 
-/* Search Bar */
-.search {
+.search-container {
     display: flex;
     justify-content: center;
     max-width: 650px;
@@ -155,35 +143,26 @@ nav a:hover {
     border-radius: 8px;
 }
 
-.search input {
-    flex: 1;
+.search-container input {
+    width: 100%;
     padding: 16px 20px;
     border: none;
-    border-radius: 8px 0 0 8px;
+    border-radius: 8px;
     font-size: 16px;
     outline: none;
-    background: #ffffff;
-    color: #111827;
+    background: var(--card-bg);
+    color: var(--text-main);
+    transition: border 0.3s;
+    border: 2px solid transparent;
 }
 
-.search button {
-    padding: 16px 30px;
-    border: none;
-    background: var(--accent);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 0 8px 8px 0;
-    transition: background 0.2s;
-}
-
-.search button:hover {
-    background: var(--accent-hover);
+.search-container input:focus {
+    border: 2px solid var(--accent);
 }
 
 /* ---------- Sections & Grids ---------- */
 section {
-    padding: 70px 0;
+    padding: 20px 0 70px 0;
 }
 
 .section-title {
@@ -193,54 +172,51 @@ section {
     color: var(--text-main);
 }
 
-.cards {
+.calc-grid-home {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
 }
 
-.card {
+.calc-card {
     background: var(--card-bg);
     padding: 35px 25px;
     border-radius: 15px;
     text-align: center;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
     text-decoration: none;
     display: block;
+    color: inherit;
 }
 
-.card:hover {
+.calc-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
 }
 
-.card .icon {
+.calc-card .calc-icon {
     font-size: 40px;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-.card h3 {
-    margin: 15px 0 10px;
+.calc-card h3 {
+    margin: 0 0 10px;
     font-size: 22px;
     color: var(--primary);
 }
 
-.card p {
+.calc-card p {
     color: var(--text-muted);
     font-size: 15px;
 }
 
+/* ---------- Utilities ---------- */
 .hidden {
     display: none !important;
-}
-
-#no-results {
-    text-align: center;
-    padding: 40px;
-    color: var(--text-muted);
 }
 
 /* ---------- AdSense Anti-CLS Containers ---------- */
@@ -257,7 +233,6 @@ section {
     letter-spacing: 1px;
 }
 
-/* Pre-reserve space to prevent layout shifting when ads load */
 .ad-leaderboard {
     min-height: 90px;
     max-width: 728px;
@@ -287,31 +262,6 @@ footer {
     text-decoration: underline;
 }
 
-/* ---------- Animations ---------- */
-.animate-fade-up {
-    animation: fadeUp 0.8s ease forwards;
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-in-scroll {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.fade-in-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* ---------- Mobile Responsive ---------- */
 @media (max-width: 768px) {
     nav {
@@ -324,39 +274,25 @@ footer {
         gap: 0;
         border-bottom: 1px solid var(--border-color);
         box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        
-        /* Mobile Menu Animation setup */
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.4s ease;
     }
 
     nav.nav-open {
-        max-height: 300px; /* Expands menu */
+        max-height: 300px;
     }
 
     nav a {
         padding: 15px 20px;
         border-bottom: 1px solid var(--border-color);
         display: block;
+        width: 100%;
+        text-align: center;
         color: var(--text-main);
     }
 
     .menu-btn {
         display: block;
-    }
-
-    .search {
-        flex-direction: column;
-    }
-
-    .search input {
-        border-radius: 8px;
-        margin-bottom: 10px;
-    }
-
-    .search button {
-        border-radius: 8px;
-        width: 100%;
     }
 }
