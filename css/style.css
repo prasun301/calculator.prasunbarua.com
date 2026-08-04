@@ -158,18 +158,13 @@ nav a.active {
     background-color: var(--primary-light);
 }
 
-/* ---------- Hero Section & Integrated Search ---------- */
+/* ---------- Hero Section & Bulletproof Search Box Fix ---------- */
 .hero {
-    background: linear-gradient(135deg, #1d4ed8 0%, #0f172a 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, #1d4ed8 0%, #0f172a 100%) !important;
+    color: #ffffff !important;
     padding: 80px 0;
     text-align: center;
     margin-bottom: 48px;
-}
-
-[data-theme="dark"] .hero {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    border-bottom: 1px solid var(--border-color);
 }
 
 .hero h1 {
@@ -178,17 +173,19 @@ nav a.active {
     line-height: 1.2;
     letter-spacing: -0.025em;
     margin-bottom: 16px;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
+/* Forces crystal-clear white text with depth shadow */
 .hero p {
-    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    font-size: clamp(1rem, 2.2vw, 1.25netrem);
     max-width: 700px;
     margin: 0 auto 36px;
-    color: #f8fafc;
-    font-weight: 450;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    font-weight: 400;
     line-height: 1.6;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .search-container {
@@ -199,28 +196,37 @@ nav a.active {
     position: relative;
 }
 
-.search-container input {
-    width: 100%;
-    padding: 16px 24px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    font-size: 1.05rem;
-    font-weight: 500;
-    outline: none;
+/* Bulletproof search input overrides for all browsers (Chrome/Safari/Firefox) */
+.search-container input,
+.search-container input[type="text"],
+.search-container input[type="search"] {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 100% !important;
+    padding: 16px 24px !important;
+    border: 2px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    font-size: 1.05rem !important;
+    font-weight: 500 !important;
+    outline: none !important;
     background-color: #ffffff !important;
     color: #0f172a !important;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25) !important;
 }
 
-.search-container input::placeholder {
+/* Explicit placeholder contrast */
+.search-container input::placeholder,
+.search-container input[type="text"]::placeholder,
+.search-container input[type="search"]::placeholder {
     color: #64748b !important;
-    opacity: 1;
+    opacity: 1 !important;
 }
 
-.search-container input:focus {
-    border-color: #fbbf24 !important;
-    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+.search-container input:focus,
+.search-container input[type="text"]:focus,
+.search-container input[type="search"]:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* ---------- Main Content & Card Grids ---------- */
