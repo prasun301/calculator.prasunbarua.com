@@ -188,3 +188,22 @@
         grid-template-columns: 1fr;
     }
 }
+.status-pass {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.status-warning {
+    color: #f59e0b;
+    font-weight: 600;
+}
+
+.status-fail {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.status-invalid {
+    color: #9ca3af;
+    font-weight: 500;
+}
