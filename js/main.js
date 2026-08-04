@@ -3,6 +3,13 @@
    Main JavaScript Architecture
 ===================================== */
 
+// Professional Developer Signature
+console.log(
+    "%c⚡ Engineering Calculator %c\nSystem Initialized. Built by Prasun Barua.", 
+    "color: #1565c0; font-size: 20px; font-weight: bold; padding: 5px 0;", 
+    "color: #4b5563; font-size: 12px;"
+);
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // ==========================================
