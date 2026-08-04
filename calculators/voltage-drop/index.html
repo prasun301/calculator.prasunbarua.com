@@ -21,20 +21,37 @@
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "What is an acceptable voltage drop limit?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "For most standards, total voltage drop from the origin of installation to the load should not exceed 3% for lighting and 5% for power applications."
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is an acceptable voltage drop limit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "According to standard electrical codes (IEC/NEC), a maximum voltage drop of 3% is recommended for branch and lighting circuits, and up to 5% for overall power and heating circuits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I reduce voltage drop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Voltage drop can be reduced by increasing conductor cross-sectional area (using a thicker wire), shortening cable run length, or selecting copper over aluminum."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if voltage drop is too high?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Excessive voltage drop causes electrical equipment to run inefficiently, leading to overheating in electric motors, flickering lights, erratic electronics behavior, and wasted energy."
+          }
         }
-      }]
+      ]
     }
     </script>
+
     <!-- MathJax Script for rendering formulas -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
-</head>
 </head>
 <body>
     <!-- Standard Header -->
@@ -51,18 +68,19 @@
     <!-- Calculator Page Layout -->
     <main class="container calculator-page">
         
-        <!-- Top Banner AdSense -->
-        <div class="ad-container ad-leaderboard">
+        <!-- 1. Top Banner AdSense -->
+        <div class="ad-container ad-top">
             <span class="ad-label">Advertisement</span>
+            <!-- Google AdSense tag here -->
         </div>
 
-        <!-- SEO H1 & Intro -->
+        <!-- 2. SEO H1 & Intro -->
         <div class="calc-header">
             <h1>Voltage Drop Calculator</h1>
             <p>Determine the exact voltage loss and percentage drop across electrical cables based on length, current, wire size, and material.</p>
         </div>
 
-        <!-- Calculator UI -->
+        <!-- 3. The Calculator UI -->
         <div class="calculator-app" id="voltage-drop-app">
             <form id="vd-form" class="calc-grid">
                 
@@ -98,7 +116,7 @@
                 </div>
 
                 <div class="input-group">
-                    <label for="csa">Cable Size (mm²)</label>
+                    <label for="csa">Cable Size (mm&sup2;)</label>
                     <input type="number" id="csa" value="6" required min="0.5" step="0.5">
                 </div>
 
@@ -124,50 +142,63 @@
             </div>
         </div>
 
-        <!-- Middle AdSense -->
-        <div class="ad-container ad-leaderboard">
+        <!-- 4. Middle AdSense -->
+        <div class="ad-container ad-middle">
             <span class="ad-label">Advertisement</span>
         </div>
 
-        <!-- SEO Content -->
+        <!-- 5. SEO Content: Formulas & Logic -->
         <section class="seo-content">
             <h2>Understanding Voltage Drop</h2>
-            <p>Every electrical conductor has inherent resistance. As current flows through a wire over a distance, some electrical energy is converted into heat, resulting in a loss of voltage at the load end. Excessive voltage drop can cause motors to overheat, lights to dim, and sensitive equipment to malfunction.</p>
+            <p>Every electrical conductor has inherent electrical resistance. As current flows through a wire over a given distance, a fraction of electrical power converts into heat, causing a reduction in voltage at the load terminals. Excessive voltage drop reduces energy efficiency, dims lights, and can cause electric motors to overheat or fail.</p>
             
-            <h3>The Formulas Used</h3>
-            <p><strong>Single-Phase / DC Circuits:</strong></p>
-            <p><code>Vd = (2 * L * I * rho) / A</code></p>
+            <h3>Voltage Drop Formulas</h3>
             
-            <p><strong>Three-Phase Circuits:</strong></p>
-            <p><code>Vd = (sqrt(3) * L * I * rho) / A</code></p>
+            <p><strong>For Single-Phase AC and DC Systems:</strong></p>
+            $$V_d = \frac{2 \cdot L \cdot I \cdot \rho}{A}$$
+            
+            <p><strong>For Three-Phase AC Systems:</strong></p>
+            $$V_d = \frac{\sqrt{3} \cdot L \cdot I \cdot \rho}{A}$$
+
+            <p><strong>Voltage Drop Percentage Calculation:</strong></p>
+            $$\% V_d = \left( \frac{V_d}{V_{\text{system}}} \right) \times 100$$
             
             <p><strong>Where:</strong></p>
             <ul>
-                <li><strong>Vd</strong> = Voltage Drop in Volts</li>
-                <li><strong>L</strong> = Length of the one-way circuit in meters</li>
-                <li><strong>I</strong> = Load current in Amps</li>
-                <li><strong>rho</strong> = Conductor resistivity (Copper $\approx 0.01724$, Aluminum $\approx 0.0282$)</li>
-                <li><strong>A</strong> = Cross-sectional area of the cable in mm²</li>
+                <li><strong><i>V<sub>d</sub></i></strong> = Total voltage drop across the run in Volts (V)</li>
+                <li><strong><i>L</i></strong> = One-way length of the cable run in meters</li>
+                <li><strong><i>I</i></strong> = Operating circuit load current in Amps (A)</li>
+                <li><strong><i>&rho;</i></strong> = Resistivity of the conductor (Copper &approx; 0.01724, Aluminum &approx; 0.0282 &Omega;&middot;mm&sup2;/m)</li>
+                <li><strong><i>A</i></strong> = Conductor cross-sectional area in mm&sup2;</li>
+                <li><strong><i>V<sub>system</sub></i></strong> = Nominal supply voltage (V)</li>
             </ul>
         </section>
 
-        <!-- FAQ Section -->
+        <!-- 6. FAQ Section -->
         <section class="faq-section">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
+                <h3>What is an acceptable voltage drop limit?</h3>
+                <p>Standard electrical guidelines (such as NEC Article 210 and IEC 60364) recommend keeping voltage drop within <strong>3%</strong> for lighting or branch circuits, and no more than <strong>5%</strong> for overall power distribution circuits from supply to final load.</p>
+            </div>
+            <div class="faq-item">
                 <h3>How can I reduce voltage drop?</h3>
-                <p>You can reduce voltage drop by increasing the cable cross-sectional area (using a thicker wire), shortening the cable run length, or lowering the load current.</p>
+                <p>You can effectively reduce voltage drop by increasing the conductor size (selecting a larger mm&sup2; area), reducing total cable length, splitting load across multiple branch circuits, or choosing copper over aluminum.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Does temperature affect voltage drop?</h3>
+                <p>Yes. As conductor temperature rises, electrical resistance increases. High ambient temperatures or heavily loaded cables experience higher internal resistance, leading to increased total voltage drop.</p>
             </div>
         </section>
 
-        <!-- Bottom AdSense -->
-        <div class="ad-container ad-leaderboard">
+        <!-- 7. Bottom AdSense -->
+        <div class="ad-container ad-bottom">
             <span class="ad-label">Advertisement</span>
         </div>
     </main>
 
     <footer class="header">
-        <div class="container text-center" style="padding: 20px 0;">
+        <div class="container text-center">
             <p>© 2026 Engineering Calculator by Prasun Barua</p>
         </div>
     </footer>
