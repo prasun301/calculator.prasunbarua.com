@@ -106,12 +106,18 @@
     <main>
         <!-- Hero Section with Search -->
         <section class="hero">
-            <div class="container">
-                <h1>Professional Engineering Calculators</h1>
-                <p>Free, fast, and accurate tools for electrical, solar, and system design.</p>
-                <div class="search-container">
-                    <input type="text" id="search-box" placeholder="Search for a calculator... (e.g. Voltage, Solar)">
-                </div>
+            <div class="search-container">
+    <input
+        type="text"
+        id="search-box"
+        placeholder="Search calculators..."
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search engineering calculators"
+    >
+
+    <div id="search-results" class="search-results"></div>
+</div>
             </div>
         </section>
 
