@@ -1,146 +1,362 @@
-/* Calculator Specific Layout */
-.calculator-page {
-    padding-top: 40px;
-    padding-bottom: 60px;
+/* =====================================
+   Engineering Calculator Website
+   10/10 Professional Stylesheet
+===================================== */
+
+/* ---------- CSS Variables & Theming ---------- */
+:root {
+    --bg-color: #f7f9fc;
+    --text-main: #111827;
+    --text-muted: #4b5563;
+    --card-bg: #ffffff;
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --border-color: #e5e7eb;
+    --primary: #1565c0;
+    --primary-hover: #0d47a1;
+    --accent: #ff9800;
+    --accent-hover: #f57c00;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-.calc-header {
-    text-align: center;
-    margin-bottom: 40px;
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    --bg-color: #111827;
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+    --card-bg: #1f2937;
+    --header-bg: rgba(31, 41, 55, 0.95);
+    --border-color: #374151;
+    --primary: #60a5fa;
+    --primary-hover: #93c5fd;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.calc-header h1 {
-    color: var(--primary);
-    font-size: 32px;
-    margin-bottom: 15px;
+/* ---------- Global Reset & Typography ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.calculator-app {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: var(--shadow);
-    margin-bottom: 40px;
+html {
+    scroll-behavior: smooth;
 }
 
-.calc-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.input-group label {
-    font-weight: 500;
-    color: var(--text-main);
-    font-size: 14px;
-}
-
-.input-group input, 
-.input-group select {
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 16px;
+body {
+    font-family: "Inter", system-ui, sans-serif;
     background: var(--bg-color);
     color: var(--text-main);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.calc-btn {
-    grid-column: 1 / -1; /* Spans full width */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ---------- Header & Navigation ---------- */
+.header {
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px); /* Modern blur effect */
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 75px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+nav a:hover {
+    color: var(--primary);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: transform 0.2s;
+}
+
+#theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.menu-btn {
+    display: none;
+    font-size: 25px;
+    border: none;
+    background: none;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+/* ---------- Hero Section ---------- */
+.hero {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 5vw, 48px); /* Fluid typography */
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: clamp(16px, 2vw, 20px);
+    max-width: 750px;
+    margin: 0 auto 40px;
+    opacity: 0.95;
+}
+
+/* Search Bar */
+.search {
+    display: flex;
+    justify-content: center;
+    max-width: 650px;
+    margin: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border-radius: 8px;
+}
+
+.search input {
+    flex: 1;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    font-size: 16px;
+    outline: none;
+    background: #ffffff;
+    color: #111827;
+}
+
+.search button {
+    padding: 16px 30px;
+    border: none;
     background: var(--accent);
     color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease;
-    margin-top: 10px;
+    border-radius: 0 8px 8px 0;
+    transition: background 0.2s;
 }
 
-.calc-btn:hover {
+.search button:hover {
     background: var(--accent-hover);
 }
 
-/* Results Formatting */
-.calc-results {
-    margin-top: 30px;
-    padding-top: 30px;
-    border-top: 2px dashed var(--border-color);
-    animation: fadeUp 0.5s ease forwards;
+/* ---------- Sections & Grids ---------- */
+section {
+    padding: 70px 0;
 }
 
-.result-box {
-    background: var(--bg-color);
-    padding: 20px;
-    border-radius: 8px;
+.section-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: var(--text-main);
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 35px 25px;
+    border-radius: 15px;
     text-align: center;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: block;
 }
 
-.primary-result {
-    background: rgba(21, 101, 192, 0.1);
-    border: 1px solid var(--primary);
-    margin-bottom: 20px;
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
-.primary-result h4 {
-    color: var(--primary);
-    font-size: 16px;
+.card .icon {
+    font-size: 40px;
+    display: block;
     margin-bottom: 10px;
 }
 
-.result-value {
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--primary);
-}
-
-.result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.result-grid h4 {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 5px;
-}
-
-.result-grid span {
+.card h3 {
+    margin: 15px 0 10px;
     font-size: 22px;
-    font-weight: 600;
-    color: var(--text-main);
-}
-
-/* SEO Content Typography */
-.seo-content, .faq-section {
-    margin: 40px 0;
-    color: var(--text-main);
-}
-
-.seo-content h2, .faq-section h2 {
     color: var(--primary);
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
 }
 
-.seo-content h3, .faq-item h3 {
-    margin: 25px 0 10px;
-    color: var(--text-main);
+.card p {
+    color: var(--text-muted);
+    font-size: 15px;
 }
 
-.faq-item {
-    margin-bottom: 20px;
+.hidden {
+    display: none !important;
+}
+
+#no-results {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+}
+
+/* ---------- AdSense Anti-CLS Containers ---------- */
+.ad-container {
+    background: var(--border-color);
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Pre-reserve space to prevent layout shifting when ads load */
+.ad-leaderboard {
+    min-height: 90px;
+    max-width: 728px;
+}
+
+/* ---------- Footer ---------- */
+footer {
+    background: #0d47a1;
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.footer-links {
+    margin-top: 15px;
+}
+
+.footer-links a {
+    color: #93c5fd;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Animations ---------- */
+.animate-fade-up {
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- Mobile Responsive ---------- */
+@media (max-width: 768px) {
+    nav {
+        position: absolute;
+        top: 75px;
+        left: 0;
+        width: 100%;
+        background: var(--card-bg);
+        flex-direction: column;
+        gap: 0;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        
+        /* Mobile Menu Animation setup */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+    }
+
+    nav.nav-open {
+        max-height: 300px; /* Expands menu */
+    }
+
+    nav a {
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border-color);
+        display: block;
+        color: var(--text-main);
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .search {
+        flex-direction: column;
+    }
+
+    .search input {
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .search button {
+        border-radius: 8px;
+        width: 100%;
+    }
 }
