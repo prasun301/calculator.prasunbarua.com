@@ -21,23 +21,40 @@
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "How do you calculate cable size?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Cable size is calculated by determining the acceptable voltage drop, the load current, the length of the run, and the resistivity of the material (copper or aluminum)."
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do you calculate cable size?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cable size is calculated by determining the acceptable voltage drop, the load current, the length of the run, and the resistivity of the material (copper or aluminum)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a standard acceptable voltage drop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "According to standard electrical codes (IEC/NEC), a 3% voltage drop is recommended for lighting circuits and up to 5% for power circuits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I choose Copper or Aluminum?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Copper has higher conductivity and smaller physical footprint. Aluminum is lighter and lower-cost, ideal for long industrial feeder lines."
+          }
         }
-      }]
+      ]
     }
     </script>
+
     <!-- MathJax Script for rendering formulas -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-</head>
-</head>
 <body>
-    <!-- Standard Header (Same as Homepage) -->
+    <!-- Standard Header -->
     <header class="header">
         <div class="container nav-container">
             <a href="/" class="logo">⚡ Engineering Calc</a>
@@ -60,7 +77,7 @@
         <!-- 2. SEO H1 & Intro -->
         <div class="calc-header">
             <h1>Cable Size Calculator</h1>
-            <p>Calculate the minimum required cable cross-sectional area ($\text{mm}^2$) to ensure safe current carrying capacity and keep voltage drop within acceptable limits.</p>
+            <p>Calculate the minimum required cable cross-sectional area (mm&sup2;) to ensure safe current carrying capacity and keep voltage drop within acceptable limits.</p>
         </div>
 
         <!-- 3. The Calculator UI -->
@@ -136,7 +153,7 @@
             <p>Sizing a cable correctly is crucial for electrical safety and efficiency. If a cable is too small, it will overheat and cause a severe voltage drop, leading to equipment failure. The cross-sectional area is determined primarily by the resistivity of the metal and the maximum allowable voltage drop.</p>
             
             <h3>The Voltage Drop Formula</h3>
-            <p>For standard electrical installations, the minimum cross-sectional area ($A$) is calculated using the following formulas.</p>
+            <p>For standard electrical installations, the minimum cross-sectional area (<i>A</i>) is calculated using the following formulas.</p>
             
             <p><strong>For DC and Single-Phase AC Systems:</strong></p>
             $$A = \frac{2 \cdot L \cdot I \cdot \rho}{V_d}$$
@@ -146,11 +163,11 @@
             
             <p><strong>Where:</strong></p>
             <ul>
-                <li><strong>$A$</strong> = Minimum cross-sectional area in $\text{mm}^2$</li>
-                <li><strong>$L$</strong> = Length of the cable in meters</li>
-                <li><strong>$I$</strong> = Load current in Amps</li>
-                <li><strong>$\rho$</strong> = Resistivity of the conductor (Copper $\approx 0.01724$, Aluminum $\approx 0.0282$)</li>
-                <li><strong>$V_d$</strong> = Allowable voltage drop in Volts (e.g., $3\%$ of $230\text{V} = 6.9\text{V}$)</li>
+                <li><strong><i>A</i></strong> = Minimum cross-sectional area in mm&sup2;</li>
+                <li><strong><i>L</i></strong> = Length of the cable in meters</li>
+                <li><strong><i>I</i></strong> = Load current in Amps</li>
+                <li><strong><i>&rho;</i></strong> = Resistivity of the conductor (Copper &approx; 0.01724, Aluminum &approx; 0.0282)</li>
+                <li><strong><i>V<sub>d</sub></i></strong> = Allowable voltage drop in Volts (e.g., 3% of 230V = 6.9V)</li>
             </ul>
         </section>
 
@@ -159,11 +176,11 @@
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
                 <h3>What is a standard acceptable voltage drop?</h3>
-                <p>According to most international electrical codes (like the NEC and IEC), a voltage drop of 3% is recommended for lighting circuits, and up to 5% is acceptable for other power and heating loads.</p>
+                <p>According to standard electrical codes (like the NEC and IEC), a voltage drop of 3% is recommended for branch and lighting circuits, and up to 5% is acceptable for overall power circuits.</p>
             </div>
             <div class="faq-item">
                 <h3>Should I choose Copper or Aluminum?</h3>
-                <p>Copper has lower resistivity and handles more current for the same physical size, making it standard for residential and commercial wiring. Aluminum is cheaper and lighter, often used for long-distance utility transmission lines or heavy industrial feeders.</p>
+                <p>Copper has lower resistivity and handles more current for the same physical size, making it standard for residential wiring. Aluminum is cheaper and lighter, making it ideal for long utility transmission lines or heavy industrial feeders.</p>
             </div>
         </section>
 
