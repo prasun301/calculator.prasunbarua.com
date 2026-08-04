@@ -1,44 +1,88 @@
 /* =========================================
-   Calculator Specific Styles
+   10/10 Professional Calculator Engine Styles
 ========================================= */
 
-.calculator-page {
-    max-width: 850px;
-    margin: 40px auto;
-    padding: 0 20px;
+/* Root Design Tokens Fallback (Ensures standalone styling consistency) */
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: rgba(37, 99, 235, 0.08);
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --focus-ring: rgba(37, 99, 235, 0.25);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
 }
 
+[data-theme="dark"] {
+    --primary: #60a5fa;
+    --primary-hover: #3b82f6;
+    --primary-light: rgba(96, 165, 250, 0.12);
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --focus-ring: rgba(96, 165, 250, 0.3);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Base Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Page Container */
+.calculator-page {
+    max-width: 880px;
+    margin: 40px auto;
+    padding: 0 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: var(--text-main);
+}
+
+/* Header Section */
 .calc-header {
     text-align: center;
     margin-bottom: 40px;
 }
 
 .calc-header h1 {
-    color: var(--primary);
-    font-size: 2.2rem;
-    margin-bottom: 15px;
+    color: var(--text-main);
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: 12px;
+    line-height: 1.2;
 }
 
 .calc-header p {
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
-/* Calculator App Container */
+/* Main Calculator Card */
 .calculator-app {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 35px;
-    box-shadow: var(--shadow);
-    margin-bottom: 40px;
+    border-radius: 16px;
+    padding: 36px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 48px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Form Grid Layout */
+/* Form Grid */
 .calc-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
 }
 
 .input-group {
@@ -50,165 +94,246 @@
     font-weight: 600;
     margin-bottom: 8px;
     color: var(--text-main);
-    font-size: 0.95rem;
+    font-size: 0.925rem;
+    letter-spacing: -0.01em;
 }
 
+/* Inputs & Selects */
 .input-group input, 
 .input-group select {
-    padding: 14px;
+    width: 100%;
+    padding: 13px 16px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 16px;
-    background: var(--bg-color);
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: var(--bg-color);
     color: var(--text-main);
-    transition: border-color 0.3s;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.input-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.input-group input:hover, 
+.input-group select:hover {
+    border-color: var(--text-muted);
 }
 
 .input-group input:focus, 
 .input-group select:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--focus-ring);
+    background-color: var(--card-bg);
 }
 
-/* Submit Button */
+/* Submit Action Button */
 .calc-btn {
-    grid-column: 1 / -1; /* Spans full width */
+    grid-column: 1 / -1;
     background: var(--primary);
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 16px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.1s;
-    margin-top: 10px;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    margin-top: 12px;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .calc-btn:hover {
     background: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 .calc-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.985);
 }
 
-/* Results Section */
+/* Results Output Display */
 .calc-results {
-    margin-top: 35px;
-    padding-top: 30px;
+    margin-top: 36px;
+    padding-top: 32px;
     border-top: 2px dashed var(--border-color);
-    animation: fadeUp 0.5s ease;
+    animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .result-box {
     background: var(--bg-color);
-    padding: 20px;
-    border-radius: 8px;
+    padding: 22px;
+    border-radius: 12px;
     text-align: center;
     border: 1px solid var(--border-color);
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .result-box h4 {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.825rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
 }
 
+/* Hero Result Container */
 .primary-result {
     margin-bottom: 20px;
-    background: rgba(21, 101, 192, 0.05); /* Light primary tint */
+    background: var(--primary-light);
     border-color: var(--primary);
 }
 
-[data-theme="dark"] .primary-result {
-    background: rgba(96, 165, 250, 0.1);
-}
-
 .primary-result .result-value {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2.75rem;
+    font-weight: 800;
     color: var(--primary);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
 }
 
 .result-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
 .result-grid span {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.35rem;
+    font-weight: 700;
     color: var(--text-main);
 }
 
-/* SEO text & FAQ under the calculator */
-.seo-content {
-    margin-bottom: 40px;
+/* Status Badges & Indicators */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.status-pass {
+    color: #059669;
+    background-color: rgba(16, 185, 129, 0.12);
+}
+
+.status-warning {
+    color: #d97706;
+    background-color: rgba(245, 158, 11, 0.12);
+}
+
+.status-fail {
+    color: #dc2626;
+    background-color: rgba(239, 68, 68, 0.12);
+}
+
+.status-invalid {
+    color: #6b7280;
+    background-color: rgba(156, 163, 175, 0.12);
+}
+
+.warning-text {
+    color: #dc2626;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+/* SEO Content & FAQ Section */
+.seo-content, .faq-section {
+    margin-bottom: 48px;
+    line-height: 1.7;
 }
 
 .seo-content h2, 
 .faq-section h2 {
-    color: var(--primary);
+    color: var(--text-main);
+    font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 20px;
+    letter-spacing: -0.02em;
 }
 
 .seo-content h3 {
-    margin: 25px 0 15px;
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin: 28px 0 14px;
 }
 
 .seo-content code {
     display: block;
     background: var(--card-bg);
-    padding: 15px;
-    border-radius: 8px;
+    padding: 16px 20px;
+    border-radius: 10px;
     border: 1px solid var(--border-color);
-    margin: 15px 0;
-    font-family: monospace;
-    font-size: 1.1rem;
+    margin: 18px 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    overflow-x: auto;
 }
 
 .faq-item {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 16px;
 }
 
-/* Mobile Responsive */
-@media (max-width: 600px) {
-    .calc-grid {
-        grid-template-columns: 1fr;
+.faq-item h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+/* Keyframe Animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+    .calculator-page {
+        margin: 20px auto;
+        padding: 0 16px;
+    }
+
+    .calculator-app {
+        padding: 24px;
+        border-radius: 12px;
+    }
+
+    .calc-grid, 
     .result-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
-}
-.status-pass {
-    color: #10b981;
-    font-weight: 600;
-}
 
-.status-warning {
-    color: #f59e0b;
-    font-weight: 600;
-}
+    .calc-header h1 {
+        font-size: 1.75rem;
+    }
 
-.status-fail {
-    color: #ef4444;
-    font-weight: 600;
-}
-
-.status-invalid {
-    color: #9ca3af;
-    font-weight: 500;
-}
-.warning-text {
-    color: #ef4444;
-    font-size: 0.9em;
-    font-weight: 600;
+    .primary-result .result-value {
+        font-size: 2.25rem;
+    }
 }
