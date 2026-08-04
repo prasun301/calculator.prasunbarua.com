@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Solar Panel Calculator | PV System Size & Generation Estimator</title>
-    <meta name="description" content="Free solar panel calculator. Estimate the required solar PV system size, number of panels, and daily energy generation based on your power consumption and location sunlight hours.">
+    <meta name="description" content="Free professional solar panel calculator. Estimate the required solar PV system size (kW), total panel count, and daily energy output based on consumption and sun hours.">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Solar Panel Calculator | Engineering Tools">
@@ -21,20 +21,37 @@
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "How many solar panels do I need for my house?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The number of solar panels depends on your average daily energy consumption in kWh, the peak sun hours in your region, and the wattage of the panels you select."
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many solar panels do I need for my house?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The number of solar panels depends on your average daily energy consumption in kWh, local peak sun hours, panel wattage, and system efficiency losses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are Peak Sun Hours?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Peak sun hours measure solar irradiance intensity. One peak sun hour equals 1,000 Watts of solar radiation per square meter hitting the surface in one hour."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the solar efficiency derate factor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The efficiency derate factor (typically 70% to 80%) accounts for real-world system energy losses including DC-to-AC inverter inefficiency, wire resistance, dust, shading, and high temperature losses."
+          }
         }
-      }]
+      ]
     }
     </script>
+
     <!-- MathJax Script for rendering formulas -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
-</head>
 </head>
 <body>
     <!-- Standard Header -->
@@ -51,18 +68,19 @@
     <!-- Calculator Page Layout -->
     <main class="container calculator-page">
         
-        <!-- Top Banner AdSense -->
-        <div class="ad-container ad-leaderboard">
+        <!-- 1. Top Banner AdSense -->
+        <div class="ad-container ad-top">
             <span class="ad-label">Advertisement</span>
+            <!-- Google AdSense tag here -->
         </div>
 
-        <!-- SEO H1 & Intro -->
+        <!-- 2. SEO H1 & Intro -->
         <div class="calc-header">
             <h1>Solar Panel Calculator</h1>
             <p>Estimate the required solar PV system size (kW), total panel count, and expected daily generation to cover your electricity needs.</p>
         </div>
 
-        <!-- Calculator UI -->
+        <!-- 3. The Calculator UI -->
         <div class="calculator-app" id="solar-panel-app">
             <form id="solar-form" class="calc-grid">
                 
@@ -79,7 +97,7 @@
                 <div class="input-group">
                     <label for="system-efficiency">System Efficiency Factor (%)</label>
                     <input type="number" id="system-efficiency" value="75" required min="50" max="95" step="1">
-                    <small style="color: var(--text-muted); font-size: 11px; margin-top: 2px;">Accounts for inverter loss, dust, and temperature.</small>
+                    <small style="color: var(--text-muted); font-size: 11px; margin-top: 4px;">Accounts for inverter loss, wiring resistance, dirt, and temperature degradation.</small>
                 </div>
 
                 <div class="input-group">
@@ -109,40 +127,61 @@
             </div>
         </div>
 
-        <!-- Middle AdSense -->
-        <div class="ad-container ad-leaderboard">
+        <!-- 4. Middle AdSense -->
+        <div class="ad-container ad-middle">
             <span class="ad-label">Advertisement</span>
         </div>
 
-        <!-- SEO Content -->
+        <!-- 5. SEO Content: Formulas & Logic -->
         <section class="seo-content">
             <h2>How to Size a Solar PV System</h2>
-            <p>Designing a reliable solar photovoltaic (PV) system starts with understanding your daily energy footprint. Utility bills usually show your monthly consumption in kilowatt-hours (kWh). Dividing this by 30 gives your average daily kWh requirement.</p>
+            <p>Designing a reliable solar photovoltaic (PV) system starts with understanding your daily energy footprint. Utility bills usually state monthly consumption in kilowatt-hours (kWh). Dividing this monthly value by 30 gives your target average daily energy requirement.</p>
             
-            <h3>The Sizing Formula</h3>
-            <p>To account for environmental losses (such as inverter efficiency, wiring resistance, shading, and module temperature degradation), we apply an efficiency derate factor.</p>
+            <h3>The Solar Sizing Formulas</h3>
+            <p>To ensure your solar array generates adequate energy under real-world ambient conditions, we apply an efficiency derate factor (<i>&eta;</i>) to compensate for thermal loss, inverter conversion losses, and voltage drops across cables.</p>
             
-            <p><code>System Size (kW) = [Daily Energy (kWh) / Peak Sun Hours] / (Efficiency %)</code></p>
-            <p><code>Number of Panels = [System Size (kW) * 1000] / Panel Wattage (W)</code></p>
+            <p><strong>1. Array Capacity Requirement:</strong></p>
+            $$P_{\text{array}} = \frac{E_{\text{daily}}}{H_{\text{sun}} \cdot \eta}$$
+
+            <p><strong>2. Total Panel Count Calculation:</strong></p>
+            $$N_{\text{panels}} = \left\lceil \frac{P_{\text{array}} \cdot 1000}{W_{\text{panel}}} \right\rceil$$
+
+            <p><strong>Where:</strong></p>
+            <ul>
+                <li><strong><i>P<sub>array</sub></i></strong> = Required continuous PV array size in kilowatts (kW)</li>
+                <li><strong><i>E<sub>daily</sub></i></strong> = Target daily consumption in kilowatt-hours (kWh)</li>
+                <li><strong><i>H<sub>sun</sub></i></strong> = Equivalent peak sun hours per day in your area</li>
+                <li><strong><i>&eta;</i></strong> = Total system efficiency factor (e.g., 75% = 0.75)</li>
+                <li><strong><i>W<sub>panel</sub></i></strong> = Nominal rated wattage of a single PV panel (Watts)</li>
+                <li><strong><i>N<sub>panels</sub></i></strong> = Total required panel count (rounded up to the next integer)</li>
+            </ul>
         </section>
 
-        <!-- FAQ Section -->
+        <!-- 6. FAQ Section -->
         <section class="faq-section">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
                 <h3>What are Peak Sun Hours?</h3>
-                <p>Peak sun hours measure the intensity of sunlight. One peak sun hour equals 1,000 watts of photovoltaic power per square meter for one hour. It is different from standard daylight hours.</p>
+                <p>Peak sun hours measure solar irradiance intensity rather than standard daylight duration. One peak sun hour corresponds to 1,000 Watts of photovoltaic power per square meter hitting the module surface in 60 minutes.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Why is the efficiency factor necessary?</h3>
+                <p>Solar panels are rated under standard test conditions (25°C). In real outdoor operating conditions, heat buildup, inverter DC-to-AC conversion losses, dirt accumulation, and wiring resistance reduce net output by 20% to 30%.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How do panel tilt and orientation affect energy yield?</h3>
+                <p>For maximum energy generation in the northern hemisphere, solar arrays should face true south at a tilt angle approximately equal to the local latitude.</p>
             </div>
         </section>
 
-        <!-- Bottom AdSense -->
-        <div class="ad-container ad-leaderboard">
+        <!-- 7. Bottom AdSense -->
+        <div class="ad-container ad-bottom">
             <span class="ad-label">Advertisement</span>
         </div>
     </main>
 
     <footer class="header">
-        <div class="container text-center" style="padding: 20px 0;">
+        <div class="container text-center">
             <p>© 2026 Engineering Calculator by Prasun Barua</p>
         </div>
     </footer>
