@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function filterCards(query) {
         cards.forEach(card => {
             const text = card.textContent.toLowerCase();
-            card.style.display = text.includes(query) ? "flex" : "none";
+            card.style.display = text.includes(query) ? "" : "none";
         });
     }
 
@@ -346,6 +346,13 @@ document.addEventListener("DOMContentLoaded", () => {
             resultsBox.style.display = "none";
         }
     });
+
+    // Initial search check on page load/refresh
+    if (input.value.trim() !== "") {
+        const initialQuery = input.value.trim().toLowerCase();
+        filterCards(initialQuery);
+        renderResults(initialQuery);
+    }
 });
 </script>
 </body>
