@@ -49,6 +49,29 @@
     --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ==========================================================================
+   DARK THEME OVERRIDES
+   ========================================================================== */
+
+[data-theme="dark"] {
+    --bg-color: #0b0f19;
+    --card-bg: #111827;
+    --header-bg: rgba(17, 24, 39, 0.88);
+
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-light: rgba(59, 130, 246, 0.15);
+
+    --border-color: #1e293b;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
 
 /* ==========================================================================
    RESET
@@ -170,6 +193,7 @@ section {
 
 nav {
     display: flex;
+    align-items: center;
     gap: 28px;
 }
 
@@ -183,6 +207,48 @@ nav a {
 nav a:hover,
 nav a.active {
     color: var(--primary);
+}
+
+/* Theme Toggle Button Styling */
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: var(--transition);
+}
+
+.theme-toggle:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Toggle Sun/Moon visibility based on active theme */
+.sun-icon {
+    display: none;
+}
+
+.moon-icon {
+    display: block;
+}
+
+[data-theme="dark"] .sun-icon {
+    display: block;
+}
+
+[data-theme="dark"] .moon-icon {
+    display: none;
 }
 
 /* ==========================================================================
@@ -303,6 +369,7 @@ nav a.active {
     z-index: 999;
     animation: fadeSearch 0.18s ease;
     color: var(--text-main);
+    text-align: left;
 }
 
 @keyframes fadeSearch {
@@ -341,7 +408,6 @@ nav a.active {
     margin-bottom: 4px;
 }
 
-/* FIX: Targets both span and p tags, and resets the hero margin */
 .search-item span,
 .search-item p {
     display: block;
@@ -351,10 +417,7 @@ nav a.active {
     margin: 0;
 }
 
-.search-item:hover {
-    background: var(--primary-light);
-}
-
+.search-item:hover,
 .search-item.active {
     background: var(--primary-light);
 }
@@ -368,9 +431,14 @@ nav a.active {
 
 mark {
     background: #fde68a;
-    color: inherit;
-    padding: 0;
+    color: #1e293b;
+    padding: 0 2px;
     border-radius: 2px;
+}
+
+[data-theme="dark"] mark {
+    background: #78350f;
+    color: #fef3c7;
 }
 
 /* ==========================================================================
@@ -433,7 +501,6 @@ mark {
 
 /* ==========================================================================
    ADSENSE READY CONTAINERS
-   Prevent CLS (Cumulative Layout Shift)
    ========================================================================== */
 
 .ad-container {
@@ -505,7 +572,7 @@ footer p {
 }
 
 /* ==========================================================================
-   GLOBAL LINKS
+   GLOBAL LINKS & BUTTONS
    ========================================================================== */
 
 a {
@@ -515,10 +582,6 @@ a {
 a:hover {
     opacity: 0.95;
 }
-
-/* ==========================================================================
-   BUTTONS
-   ========================================================================== */
 
 .btn {
     display: inline-flex;
@@ -555,7 +618,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   TABLES
+   TABLES & FORMS
    ========================================================================== */
 
 table {
@@ -573,10 +636,6 @@ th {
     background: var(--primary-light);
     font-weight: 700;
 }
-
-/* ==========================================================================
-   FORM ELEMENTS
-   ========================================================================== */
 
 input,
 textarea,
@@ -598,10 +657,6 @@ label {
     margin-bottom: 8px;
     font-weight: 600;
 }
-
-/* ==========================================================================
-   BADGES
-   ========================================================================== */
 
 .badge {
     display: inline-block;
@@ -633,45 +688,18 @@ label {
     text-align: right;
 }
 
-.mt-1 {
-    margin-top: 8px;
-}
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mt-4 { margin-top: 36px; }
 
-.mt-2 {
-    margin-top: 16px;
-}
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.mb-4 { margin-bottom: 36px; }
 
-.mt-3 {
-    margin-top: 24px;
-}
-
-.mt-4 {
-    margin-top: 36px;
-}
-
-.mb-1 {
-    margin-bottom: 8px;
-}
-
-.mb-2 {
-    margin-bottom: 16px;
-}
-
-.mb-3 {
-    margin-bottom: 24px;
-}
-
-.mb-4 {
-    margin-bottom: 36px;
-}
-
-.rounded {
-    border-radius: var(--radius-md);
-}
-
-.shadow {
-    box-shadow: var(--shadow-md);
-}
+.rounded { border-radius: var(--radius-md); }
+.shadow { box-shadow: var(--shadow-md); }
 
 /* ==========================================================================
    LOADING SPINNER
@@ -722,7 +750,6 @@ label {
 }
 
 @media (max-width: 768px) {
-    /* Header */
     .nav-container {
         height: 64px;
     }
@@ -763,7 +790,6 @@ label {
         border-bottom: none;
     }
 
-    /* Hero */
     .hero {
         padding: 64px 0;
     }
@@ -777,7 +803,6 @@ label {
         padding: 0 10px;
     }
 
-    /* Search */
     .search-container {
         max-width: 100%;
     }
@@ -797,16 +822,6 @@ label {
         padding: 14px;
     }
 
-    .search-item strong {
-        font-size: 0.95rem;
-    }
-
-    .search-item span,
-    .search-item p {
-        font-size: 0.82rem;
-    }
-
-    /* Cards */
     .calc-grid-home {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -816,15 +831,6 @@ label {
         padding: 24px;
     }
 
-    .calc-icon {
-        font-size: 2.3rem;
-    }
-
-    .calc-card h3 {
-        font-size: 1.15rem;
-    }
-
-    /* Footer */
     .footer-links {
         flex-direction: column;
         gap: 14px;
@@ -846,10 +852,6 @@ label {
 
     .calc-card {
         padding: 20px;
-    }
-
-    .search-container input {
-        border-radius: 12px;
     }
 }
 
@@ -893,42 +895,6 @@ label {
 }
 
 /* ==========================================================================
-   HIGH CONTRAST MODE
-   ========================================================================== */
-
-@media (prefers-contrast: more) {
-    .calc-card {
-        border-width: 2px;
-    }
-
-    .search-container input {
-        border-width: 2px;
-    }
-
-    .search-item.active {
-        outline: 2px solid var(--primary);
-    }
-}
-
-/* ==========================================================================
-   HOVER DEVICES ONLY
-   ========================================================================== */
-
-@media (hover: hover) {
-    .calc-card:hover {
-        transform: translateY(-6px);
-    }
-
-    nav a:hover {
-        color: var(--primary);
-    }
-
-    .footer-links a:hover {
-        color: #fff;
-    }
-}
-
-/* ==========================================================================
    SCROLLBAR
    ========================================================================== */
 
@@ -949,7 +915,6 @@ label {
     background: var(--primary);
 }
 
-/* Firefox */
 * {
     scrollbar-width: thin;
     scrollbar-color: var(--border-color) var(--bg-color);
@@ -973,10 +938,7 @@ body {
     will-change: transform;
 }
 
-.calc-card {
-    isolation: isolate;
-}
-
+.calc-card,
 .hero,
 .header {
     isolation: isolate;
