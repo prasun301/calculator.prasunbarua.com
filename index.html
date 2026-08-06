@@ -2,583 +2,351 @@
 <html lang="en" data-theme="light">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JFG1620GPE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-JFG1620GPE');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JFG1620GPE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JFG1620GPE');
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Engineering Calculators | Professional Electrical, Solar & Engineering Tools</title>
 
-    <meta name="description"
-          content="Free professional engineering calculators for electrical, solar PV, power systems, voltage drop, cable sizing, energy calculations, and more.">
-
-    <meta name="keywords"
-          content="engineering calculator, electrical calculator, cable size calculator, voltage drop calculator, solar calculator, PV calculator">
-
+    <meta name="description" content="Free professional engineering calculators for electrical, solar PV, power systems, voltage drop, cable sizing, energy calculations, and more.">
+    <meta name="keywords" content="engineering calculator, electrical calculator, cable size calculator, voltage drop calculator, solar calculator, PV calculator">
     <meta name="author" content="Prasun Barua">
 
-    <meta property="og:title"
-          content="Professional Engineering Calculators">
+    <meta property="og:title" content="Professional Engineering Calculators">
+    <meta property="og:description" content="Free, fast, and accurate engineering calculators for electrical, solar PV, and power system design.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calculator.prasunbarua.com/">
+    <meta property="og:image" content="https://calculator.prasunbarua.com/images/og-image.jpg">
 
-    <meta property="og:description"
-          content="Free, fast, and accurate engineering calculators for electrical, solar PV, and power system design.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#1d4ed8">
 
-    <meta property="og:type"
-          content="website">
+    <link rel="canonical" href="https://calculator.prasunbarua.com/">
 
-    <meta property="og:url"
-          content="https://calculator.prasunbarua.com/">
-
-    <meta property="og:image"
-          content="https://calculator.prasunbarua.com/images/og-image.jpg">
-
-    <meta name="twitter:card"
-          content="summary_large_image">
-
-    <meta name="theme-color"
-          content="#1d4ed8">
-
-    <link rel="canonical"
-          href="https://calculator.prasunbarua.com/">
-
-<!-- Favicon -->
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/style.css">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8736637194399168"
-     crossorigin="anonymous"></script>
+    <!-- Prevents white flash on load for dark mode users -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8736637194399168" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
 <header class="header">
-
     <div class="container nav-container">
-
         <a href="/" class="logo">
             ⚡ Engineering Calc
         </a>
 
         <nav id="main-nav">
-
             <a href="/" class="active">Home</a>
-
             <a href="#calculators">Calculators</a>
-
         </nav>
 
+        <!-- Dark/Light Mode Toggle Button -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
     </div>
-
 </header>
 
 <main>
+    <section class="hero">
+        <div class="container">
+            <h1>Professional Engineering Calculators</h1>
+            <p>Free, fast, and accurate tools for electrical, solar, renewable energy, and engineering system design.</p>
 
-<section class="hero">
+            <div class="search-container">
+                <input
+                    type="search"
+                    id="search-box"
+                    placeholder="Search calculators..."
+                    autocomplete="off"
+                    spellcheck="false"
+                    aria-label="Search Engineering Calculators">
 
+                <div
+                    id="search-results"
+                    class="search-results"
+                    role="listbox"
+                    aria-label="Search Results">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculators" class="container">
+        <h2 class="section-title">All Engineering Calculators</h2>
+
+        <div class="calc-grid-home" id="calc-grid">
+            <a href="/calculators/cable-size/" class="calc-card">
+                <div class="calc-icon">📏</div>
+                <h3>Cable Size Calculator</h3>
+                <p>Calculate electrical cable size using load current, distance, voltage drop and installation method.</p>
+            </a>
+
+            <a href="/calculators/voltage-drop/" class="calc-card">
+                <div class="calc-icon">📉</div>
+                <h3>Voltage Drop Calculator</h3>
+                <p>Determine voltage loss and percentage voltage drop for single-phase, three-phase and DC systems.</p>
+            </a>
+
+            <a href="/calculators/solar-panel/" class="calc-card">
+                <div class="calc-icon">☀️</div>
+                <h3>Solar Panel Calculator</h3>
+                <p>Estimate solar PV system size, panel quantity, daily energy generation, and required rooftop area.</p>
+            </a>
+
+            <!-- Future calculators -->
+            <a href="#" class="calc-card">
+                <div class="calc-icon">⚡</div>
+                <h3>Power Calculator</h3>
+                <p>Coming Soon</p>
+            </a>
+
+            <a href="#" class="calc-card">
+                <div class="calc-icon">🔋</div>
+                <h3>Battery Calculator</h3>
+                <p>Coming Soon</p>
+            </a>
+
+            <a href="#" class="calc-card">
+                <div class="calc-icon">🔌</div>
+                <h3>Transformer Calculator</h3>
+                <p>Coming Soon</p>
+            </a>
+
+            <a href="#" class="calc-card">
+                <div class="calc-icon">🏭</div>
+                <h3>Motor Calculator</h3>
+                <p>Coming Soon</p>
+            </a>
+
+            <a href="#" class="calc-card">
+                <div class="calc-icon">🌞</div>
+                <h3>PV String Calculator</h3>
+                <p>Coming Soon</p>
+            </a>
+
+            <a href="#" class="calc-card">
+                <div class="calc-icon">📐</div>
+                <h3>Conduit Fill Calculator</h3>
+                <p>Coming Soon</p>
+            </a>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer>
     <div class="container">
-
-        <h1>
-            Professional Engineering Calculators
-        </h1>
-
         <p>
-            Free, fast, and accurate tools for electrical, solar,
-            renewable energy, and engineering system design.
+            © 2026 Engineering Calculator by <strong>Prasun Barua</strong>. All Rights Reserved.
         </p>
 
-        <div class="search-container">
-
-            <input
-                type="search"
-                id="search-box"
-                placeholder="Search calculators..."
-                autocomplete="off"
-                spellcheck="false"
-                aria-label="Search Engineering Calculators">
-
-            <div
-                id="search-results"
-                class="search-results"
-                role="listbox"
-                aria-label="Search Results">
-            </div>
-
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/about/">About</a>
+            <a href="/contact/">Contact</a>
+            <a href="/privacy-policy/">Privacy Policy</a>
+            <a href="/terms/">Terms</a>
         </div>
-
     </div>
-
-</section>
-
-<section id="calculators" class="container">
-
-<h2 class="section-title">
-
-All Engineering Calculators
-
-</h2>
-
-<div class="calc-grid-home" id="calc-grid">
-
-<a href="/calculators/cable-size/" class="calc-card">
-
-<div class="calc-icon">
-📏
-</div>
-
-<h3>
-
-Cable Size Calculator
-
-</h3>
-
-<p>
-
-Calculate electrical cable size using load current,
-distance, voltage drop and installation method.
-
-</p>
-
-</a>
-
-<a href="/calculators/voltage-drop/" class="calc-card">
-
-<div class="calc-icon">
-📉
-</div>
-
-<h3>
-
-Voltage Drop Calculator
-
-</h3>
-
-<p>
-
-Determine voltage loss and percentage voltage drop
-for single-phase, three-phase and DC systems.
-
-</p>
-
-</a>
-
-<a href="/calculators/solar-panel/" class="calc-card">
-
-<div class="calc-icon">
-☀️
-</div>
-
-<h3>
-
-Solar Panel Calculator
-
-</h3>
-
-<p>
-
-Estimate solar PV system size,
-panel quantity,
-daily energy generation,
-and required rooftop area.
-
-</p>
-
-</a>
-
-<!-- Future calculators -->
-
-<a href="#" class="calc-card">
-
-<div class="calc-icon">
-⚡
-</div>
-
-<h3>
-
-Power Calculator
-
-</h3>
-
-<p>
-
-Coming Soon
-
-</p>
-
-</a>
-
-<a href="#" class="calc-card">
-
-<div class="calc-icon">
-🔋
-</div>
-
-<h3>
-
-Battery Calculator
-
-</h3>
-
-<p>
-
-Coming Soon
-
-</p>
-
-</a>
-
-<a href="#" class="calc-card">
-
-<div class="calc-icon">
-🔌
-</div>
-
-<h3>
-
-Transformer Calculator
-
-</h3>
-
-<p>
-
-Coming Soon
-
-</p>
-
-</a>
-
-<a href="#" class="calc-card">
-
-<div class="calc-icon">
-🏭
-</div>
-
-<h3>
-
-Motor Calculator
-
-</h3>
-
-<p>
-
-Coming Soon
-
-</p>
-
-</a>
-
-<a href="#" class="calc-card">
-
-<div class="calc-icon">
-🌞
-</div>
-
-<h3>
-
-PV String Calculator
-
-</h3>
-
-<p>
-
-Coming Soon
-
-</p>
-
-</a>
-
-<a href="#" class="calc-card">
-
-<div class="calc-icon">
-📐
-</div>
-
-<h3>
-
-Conduit Fill Calculator
-
-</h3>
-
-<p>
-
-Coming Soon
-
-</p>
-
-</a>
-
-</div>
-        </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-
-            <p>
-                © 2026 Engineering Calculator by
-                <strong>Prasun Barua</strong>.
-                All Rights Reserved.
-            </p>
-
-            <div class="footer-links">
-                <a href="/">Home</a>
-                <a href="/about/">About</a>
-                <a href="/contact/">Contact</a>
-                <a href="/privacy-policy/">Privacy Policy</a>
-                <a href="/terms/">Terms</a>
-            </div>
-
-        </div>
-    </footer>
-
-    <!-- Main JavaScript -->
-    <script src="/js/main.js"></script>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-
-        const input = document.getElementById("search-box");
-        const resultsBox = document.getElementById("search-results");
-        const cards = [...document.querySelectorAll(".calc-card")];
-
-        // Build calculator database
-        const calculators = cards
-            .filter(card => card.getAttribute("href") && card.getAttribute("href") !== "#")
-            .map(card => ({
-                title: card.querySelector("h3").textContent.trim(),
-                description: card.querySelector("p").textContent.trim(),
-                url: card.href,
-                element: card
-            }));
-
-        let matches = [];
-        let activeIndex = -1;
-
-        function escapeHTML(text) {
-            return text.replace(/[&<>"']/g, m => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                "\"": "&quot;",
-                "'": "&#039;"
-            })[m]);
+</footer>
+
+<!-- Main JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Search Auto-complete & Theme Toggle Logic -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================================
+       THEME TOGGLE LOGIC
+       ========================================= */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    
+    themeToggleBtn.addEventListener('click', function() {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
         }
-
-        function highlight(text, query) {
-            if (!query) return escapeHTML(text);
-
-            const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-            const regex = new RegExp("(" + escaped + ")", "ig");
-
-            return escapeHTML(text).replace(regex, "<mark>$1</mark>");
-        }
-
-        function filterCards(query) {
-
-            cards.forEach(card => {
-
-                const text = card.textContent.toLowerCase();
-
-                card.style.display =
-                    text.includes(query) ? "flex" : "none";
-
-            });
-
-        }
-
-        function renderResults(query) {
-
-            resultsBox.innerHTML = "";
-
-            if (query === "") {
-
-                resultsBox.style.display = "none";
-                activeIndex = -1;
-                return;
-
-            }
-
-            matches = calculators.filter(calc => {
-
-                const text =
-                    (calc.title + " " + calc.description).toLowerCase();
-
-                return text.includes(query);
-
-            });
-
-            if (!matches.length) {
-
-                resultsBox.innerHTML = `
-                    <div class="no-results">
-                        No calculators found.
-                    </div>
-                `;
-
-                resultsBox.style.display = "block";
-                activeIndex = -1;
-                return;
-
-            }
-
-            matches.forEach((calc, index) => {
-
-                const item = document.createElement("div");
-
-                item.className = "search-item";
-
-                if (index === 0) {
-
-                    item.classList.add("active");
-                    activeIndex = 0;
-
-                }
-
-                item.innerHTML = `
-                    <strong>${highlight(calc.title, query)}</strong>
-                    <span>${highlight(calc.description, query)}</span>
-                `;
-
-                item.addEventListener("click", () => {
-
-                    window.location.href = calc.url;
-
-                });
-
-                resultsBox.appendChild(item);
-
-            });
-
-            resultsBox.style.display = "block";
-
-        }
-
-        function updateSelection() {
-
-            const items =
-                resultsBox.querySelectorAll(".search-item");
-
-            items.forEach(item =>
-                item.classList.remove("active")
-            );
-
-            if (
-                activeIndex >= 0 &&
-                activeIndex < items.length
-            ) {
-
-                items[activeIndex].classList.add("active");
-                items[activeIndex].scrollIntoView({
-                    block: "nearest"
-                });
-
-            }
-
-        }
-
-        input.addEventListener("input", () => {
-
-            const query =
-                input.value.trim().toLowerCase();
-
-            filterCards(query);
-
-            renderResults(query);
-
-        });
-
-        input.addEventListener("keydown", e => {
-
-            if (
-                resultsBox.style.display === "none"
-            ) return;
-
-            if (e.key === "ArrowDown") {
-
-                e.preventDefault();
-
-                activeIndex =
-                    Math.min(
-                        activeIndex + 1,
-                        matches.length - 1
-                    );
-
-                updateSelection();
-
-            }
-
-            else if (e.key === "ArrowUp") {
-
-                e.preventDefault();
-
-                activeIndex =
-                    Math.max(
-                        activeIndex - 1,
-                        0
-                    );
-
-                updateSelection();
-
-            }
-
-            else if (e.key === "Enter") {
-
-                e.preventDefault();
-
-                if (
-                    activeIndex >= 0 &&
-                    matches[activeIndex]
-                ) {
-
-                    window.location.href =
-                        matches[activeIndex].url;
-
-                }
-
-            }
-
-            else if (e.key === "Escape") {
-
-                resultsBox.style.display = "none";
-
-            }
-
-        });
-
-        input.addEventListener("focus", () => {
-
-            if (input.value.trim() !== "") {
-
-                renderResults(
-                    input.value.trim().toLowerCase()
-                );
-
-            }
-
-        });
-
-        document.addEventListener("click", e => {
-
-            if (!e.target.closest(".search-container")) {
-
-                resultsBox.style.display = "none";
-
-            }
-
-        });
-
     });
-    </script>
+
+    /* =========================================
+       SEARCH AUTO-COMPLETE LOGIC
+       ========================================= */
+    const input = document.getElementById("search-box");
+    const resultsBox = document.getElementById("search-results");
+    const cards = [...document.querySelectorAll(".calc-card")];
+
+    // Build calculator database
+    const calculators = cards
+        .filter(card => card.getAttribute("href") && card.getAttribute("href") !== "#")
+        .map(card => ({
+            title: card.querySelector("h3").textContent.trim(),
+            description: card.querySelector("p").textContent.trim(),
+            url: card.href,
+            element: card
+        }));
+
+    let matches = [];
+    let activeIndex = -1;
+
+    function escapeHTML(text) {
+        return text.replace(/[&<>"']/g, m => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "\"": "&quot;",
+            "'": "&#039;"
+        })[m]);
+    }
+
+    function highlight(text, query) {
+        if (!query) return escapeHTML(text);
+        const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const regex = new RegExp("(" + escaped + ")", "ig");
+        return escapeHTML(text).replace(regex, "<mark>$1</mark>");
+    }
+
+    function filterCards(query) {
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(query) ? "flex" : "none";
+        });
+    }
+
+    function renderResults(query) {
+        resultsBox.innerHTML = "";
+
+        if (query === "") {
+            resultsBox.style.display = "none";
+            activeIndex = -1;
+            return;
+        }
+
+        matches = calculators.filter(calc => {
+            const text = (calc.title + " " + calc.description).toLowerCase();
+            return text.includes(query);
+        });
+
+        if (!matches.length) {
+            resultsBox.innerHTML = `
+                <div class="no-results">
+                    No calculators found.
+                </div>
+            `;
+            resultsBox.style.display = "block";
+            activeIndex = -1;
+            return;
+        }
+
+        matches.forEach((calc, index) => {
+            const item = document.createElement("div");
+            item.className = "search-item";
+
+            if (index === 0) {
+                item.classList.add("active");
+                activeIndex = 0;
+            }
+
+            item.innerHTML = `
+                <strong>${highlight(calc.title, query)}</strong>
+                <span>${highlight(calc.description, query)}</span>
+            `;
+
+            item.addEventListener("click", () => {
+                window.location.href = calc.url;
+            });
+
+            resultsBox.appendChild(item);
+        });
+
+        resultsBox.style.display = "block";
+    }
+
+    function updateSelection() {
+        const items = resultsBox.querySelectorAll(".search-item");
+        items.forEach(item => item.classList.remove("active"));
+
+        if (activeIndex >= 0 && activeIndex < items.length) {
+            items[activeIndex].classList.add("active");
+            items[activeIndex].scrollIntoView({ block: "nearest" });
+        }
+    }
+
+    input.addEventListener("input", () => {
+        const query = input.value.trim().toLowerCase();
+        filterCards(query);
+        renderResults(query);
+    });
+
+    input.addEventListener("keydown", e => {
+        if (resultsBox.style.display === "none") return;
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            activeIndex = Math.min(activeIndex + 1, matches.length - 1);
+            updateSelection();
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            activeIndex = Math.max(activeIndex - 1, 0);
+            updateSelection();
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (activeIndex >= 0 && matches[activeIndex]) {
+                window.location.href = matches[activeIndex].url;
+            }
+        } else if (e.key === "Escape") {
+            resultsBox.style.display = "none";
+        }
+    });
+
+    input.addEventListener("focus", () => {
+        if (input.value.trim() !== "") {
+            renderResults(input.value.trim().toLowerCase());
+        }
+    });
+
+    document.addEventListener("click", e => {
+        if (!e.target.closest(".search-container")) {
+            resultsBox.style.display = "none";
+        }
+    });
+});
+</script>
 </body>
 </html>
-
-
-</section>
