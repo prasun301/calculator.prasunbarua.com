@@ -1,7 +1,7 @@
 /* ==========================================================================
    Engineering Calculator Website
    Professional Production Stylesheet
-   Version 2.0
+   Version 2.0 (Clean Light Edition)
    ========================================================================== */
 
 /* ==========================================================================
@@ -9,7 +9,6 @@
    ========================================================================== */
 
 :root {
- 
     /* Background */
     --bg-color: #f8fafc;
     --card-bg: #ffffff;
@@ -50,30 +49,6 @@
 }
 
 /* ==========================================================================
-   DARK THEME OVERRIDES
-   ========================================================================== */
-
-[data-theme="dark"] {
-    --bg-color: #0b0f19;
-    --card-bg: #111827;
-    --header-bg: rgba(17, 24, 39, 0.88);
-
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-
-    --primary: #3b82f6;
-    --primary-hover: #60a5fa;
-    --primary-light: rgba(59, 130, 246, 0.15);
-
-    --border-color: #1e293b;
-
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-
-/* ==========================================================================
    RESET
    ========================================================================== */
 
@@ -99,7 +74,6 @@ body {
     line-height: 1.6;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    transition: background 0.25s, color 0.25s;
 }
 
 img {
@@ -193,7 +167,6 @@ section {
 
 nav {
     display: flex;
-    align-items: center;
     gap: 28px;
 }
 
@@ -207,48 +180,6 @@ nav a {
 nav a:hover,
 nav a.active {
     color: var(--primary);
-}
-
-/* Theme Toggle Button Styling */
-.theme-toggle {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--text-main);
-    transition: var(--transition);
-}
-
-.theme-toggle:hover {
-    border-color: var(--primary);
-    background: var(--primary-light);
-}
-
-.theme-toggle svg {
-    width: 20px;
-    height: 20px;
-}
-
-/* Toggle Sun/Moon visibility based on active theme */
-.sun-icon {
-    display: none;
-}
-
-.moon-icon {
-    display: block;
-}
-
-[data-theme="dark"] .sun-icon {
-    display: block;
-}
-
-[data-theme="dark"] .moon-icon {
-    display: none;
 }
 
 /* ==========================================================================
@@ -369,7 +300,6 @@ nav a.active {
     z-index: 999;
     animation: fadeSearch 0.18s ease;
     color: var(--text-main);
-    text-align: left;
 }
 
 @keyframes fadeSearch {
@@ -431,14 +361,9 @@ nav a.active {
 
 mark {
     background: #fde68a;
-    color: #1e293b;
-    padding: 0 2px;
+    color: inherit;
+    padding: 0;
     border-radius: 2px;
-}
-
-[data-theme="dark"] mark {
-    background: #78350f;
-    color: #fef3c7;
 }
 
 /* ==========================================================================
@@ -501,6 +426,7 @@ mark {
 
 /* ==========================================================================
    ADSENSE READY CONTAINERS
+   Prevent CLS (Cumulative Layout Shift)
    ========================================================================== */
 
 .ad-container {
@@ -572,7 +498,7 @@ footer p {
 }
 
 /* ==========================================================================
-   GLOBAL LINKS & BUTTONS
+   GLOBAL LINKS
    ========================================================================== */
 
 a {
@@ -582,6 +508,10 @@ a {
 a:hover {
     opacity: 0.95;
 }
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
 
 .btn {
     display: inline-flex;
@@ -618,7 +548,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   TABLES & FORMS
+   TABLES
    ========================================================================== */
 
 table {
@@ -636,6 +566,10 @@ th {
     background: var(--primary-light);
     font-weight: 700;
 }
+
+/* ==========================================================================
+   FORM ELEMENTS
+   ========================================================================== */
 
 input,
 textarea,
@@ -657,6 +591,10 @@ label {
     margin-bottom: 8px;
     font-weight: 600;
 }
+
+/* ==========================================================================
+   BADGES
+   ========================================================================== */
 
 .badge {
     display: inline-block;
@@ -822,6 +760,15 @@ label {
         padding: 14px;
     }
 
+    .search-item strong {
+        font-size: 0.95rem;
+    }
+
+    .search-item span,
+    .search-item p {
+        font-size: 0.82rem;
+    }
+
     .calc-grid-home {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -829,6 +776,14 @@ label {
 
     .calc-card {
         padding: 24px;
+    }
+
+    .calc-icon {
+        font-size: 2.3rem;
+    }
+
+    .calc-card h3 {
+        font-size: 1.15rem;
     }
 
     .footer-links {
@@ -852,6 +807,10 @@ label {
 
     .calc-card {
         padding: 20px;
+    }
+
+    .search-container input {
+        border-radius: 12px;
     }
 }
 
@@ -891,6 +850,42 @@ label {
     .calc-card {
         page-break-inside: avoid;
         border: 1px solid #999;
+    }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST MODE
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+    .calc-card {
+        border-width: 2px;
+    }
+
+    .search-container input {
+        border-width: 2px;
+    }
+
+    .search-item.active {
+        outline: 2px solid var(--primary);
+    }
+}
+
+/* ==========================================================================
+   HOVER DEVICES ONLY
+   ========================================================================== */
+
+@media (hover: hover) {
+    .calc-card:hover {
+        transform: translateY(-6px);
+    }
+
+    nav a:hover {
+        color: var(--primary);
+    }
+
+    .footer-links a:hover {
+        color: #fff;
     }
 }
 
