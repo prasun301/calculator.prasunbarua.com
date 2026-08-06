@@ -1,11 +1,11 @@
 /* ==========================================================================
    Engineering Calculator Website
    Professional Production Stylesheet
-   Version 2.0 (Clean Light Edition)
+   Version 2.1 (Auto Light/Dark Edition)
    ========================================================================== */
 
 /* ==========================================================================
-   CSS VARIABLES
+   CSS VARIABLES (LIGHT MODE DEFAULT)
    ========================================================================== */
 
 :root {
@@ -46,6 +46,37 @@
 
     /* Animation */
     --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   CSS VARIABLES (AUTOMATIC DARK MODE)
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Background */
+        --bg-color: #0f172a;
+        --card-bg: #1e293b;
+        --header-bg: rgba(15, 23, 42, 0.88);
+
+        /* Text */
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+
+        /* Brand (Slightly lighter for contrast on dark backgrounds) */
+        --primary: #3b82f6;
+        --primary-hover: #60a5fa;
+        --primary-light: rgba(59, 130, 246, 0.15);
+        /* Accent stays the same */
+
+        /* Borders */
+        --border-color: #334155;
+
+        /* Shadows (Darker and slightly stronger for dark mode depth) */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
 }
 
 /* ==========================================================================
@@ -361,9 +392,16 @@ nav a.active {
 
 mark {
     background: #fde68a;
-    color: inherit;
+    color: #0f172a;
     padding: 0;
     border-radius: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+    mark {
+        background: #ca8a04;
+        color: #fff;
+    }
 }
 
 /* ==========================================================================
@@ -403,6 +441,7 @@ mark {
     font-size: 2.7rem;
     margin-bottom: 18px;
     line-height: 1;
+    color: var(--primary);
 }
 
 .calc-card h3 {
