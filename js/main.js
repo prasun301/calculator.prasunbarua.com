@@ -20,11 +20,11 @@
  *     instead of throwing.
  *
  * Expected markup contract (already provided by the page):
- *   #search-box          — <input> search field
- *   #search-results       — autocomplete dropdown container
- *   .calc-card             — calculator card links (title = h3, desc = p, url = href)
- *   #menu-btn / #main-nav  — mobile navigation toggle
- *   #theme-toggle           — optional theme switch button (data-theme aware)
+ *   #search-box        — <input> search field
+ *   #search-results    — autocomplete dropdown container
+ *   .calc-card         — calculator card links (title = h3, desc = p, url = href)
+ *   #menu-btn / #main-nav — mobile navigation toggle
+ *   #theme-toggle      — optional theme switch button (data-theme aware)
  * =============================================================================
  */
 
@@ -323,8 +323,7 @@
 
   /**
    * Shows/hides the main .calc-card grid entries to reflect the active
-   * search query (requirement: "Filter calculator cards / Hide non-matching
-   * cards").
+   * search query.
    * @param {object[]} results - Ranked search index entries considered a match.
    */
   function filterCalcCardGrid(results) {
@@ -416,8 +415,7 @@
   }
 
   /**
-   * Central keydown handler for the search box: arrow navigation, enter
-   * to select, escape to close.
+   * Central keydown handler for the search box.
    * @param {KeyboardEvent} event
    */
   function handleSearchKeydown(event) {
@@ -520,14 +518,12 @@
     state.searchBox = document.getElementById("search-box");
     state.resultsContainer = document.getElementById("search-results");
 
-    // Search is optional on some pages; bail out gracefully if absent.
     if (!state.searchBox || !state.resultsContainer) {
       return;
     }
 
     buildSearchIndex();
 
-    // ARIA wiring for the combobox pattern.
     state.searchBox.setAttribute("role", "combobox");
     state.searchBox.setAttribute("aria-expanded", "false");
     state.searchBox.setAttribute("aria-autocomplete", "list");
@@ -593,7 +589,6 @@
     try {
       localStorage.setItem(CONFIG.THEME_STORAGE_KEY, theme);
     } catch (err) {
-      // localStorage may be unavailable (private browsing, storage disabled).
       console.warn("Unable to persist theme preference:", err);
     }
   }
@@ -616,11 +611,8 @@
     if (!themeBtn) return;
 
     themeBtn.addEventListener("click", () => {
-      const current = document.documentElement.dataset.theme === CONFIG.THEME_DARK
-        ? CONFIG.THEME_DARK
-        : CONFIG.THEME_LIGHT;
-      const next = current === CONFIG.THEME_DARK ? CONFIG.THEME_LIGHT : CONFIG.THEME_DARK;
-      applyTheme(next);
+      const isDark = document.documentElement.dataset.theme === CONFIG.THEME_DARK;
+      applyTheme(isDark ? CONFIG.THEME_LIGHT : CONFIG.THEME_DARK);
     });
   }
 
@@ -629,8 +621,6 @@
    * ========================================================================= */
 
   function init() {
-    // Each subsystem is isolated so a failure in one does not prevent the
-    // others from initializing.
     try {
       loadSavedTheme();
     } catch (err) {
@@ -659,12 +649,9 @@
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
-    // DOM is already ready (script loaded with `defer` after parsing, etc.).
     init();
   }
 
-  // Small, optional public API for advanced pages that inject calculator
-  // cards dynamically after initial load (e.g. via fetch/pagination).
   window.CalculatorSearch = Object.freeze({
     rebuildIndex: buildSearchIndex,
   });
