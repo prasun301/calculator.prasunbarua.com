@@ -547,7 +547,7 @@ nav a.active{
     display: none;
     z-index: 999;
     animation: fadeSearch .18s ease;
-    color: var(--text-main); /* Fix applied here */
+    color: var(--text-main); 
 }
 
 @keyframes fadeSearch {
@@ -568,10 +568,9 @@ nav a.active{
         background .18s,
         color .18s;
     border-bottom: 1px solid var(--border-color);
-    color: var(--text-main); /* Fix applied here */
+    color: var(--text-main); 
 }
 
-/* Added fallback in case your search links use <a> tags */
 .search-item a {
     color: var(--text-main);
     text-decoration: none;
@@ -589,11 +588,14 @@ nav a.active{
     margin-bottom: 4px;
 }
 
-.search-item span {
+/* FIX: Targets both span and p tags, and resets the hero margin */
+.search-item span,
+.search-item p {
     display: block;
     font-size: .88rem;
-    color: var(--text-muted);
+    color: var(--text-muted); 
     line-height: 1.45;
+    margin: 0; 
 }
 
 .search-item:hover {
