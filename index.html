@@ -16,15 +16,11 @@
     <title>Engineering Calculators | Electrical, Solar PV & Power System Tools</title>
 
     <meta name="description" content="Free, fast, and accurate engineering calculators for electrical, solar PV, and power system design, including voltage drop, cable sizing, energy, and electrical calculations.">
-
     <meta name="keywords" content="engineering calculator, electrical calculator, electrical design tools, cable sizing calculator, voltage drop calculator, solar PV calculator, power system calculator">
-
     <meta name="author" content="Prasun Barua">
 
+    <!-- Open Graph Metadata -->
     <meta property="og:title" content="Engineering Calculators | Electrical, Solar PV & Power System Tools">
-    <meta property="og:description" content="Free, fast, and accurate engineering calculators for electrical, solar PV, and power system design.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://prasunbarua.com">
     <meta property="og:description" content="Free, fast, and accurate engineering calculators for electrical, solar PV, and power system design.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://calculator.prasunbarua.com/">
@@ -63,32 +59,37 @@
 
 <main>
     <section class="hero">
-    <div class="container">
-        <h1>Engineering Calculators</h1>
+        <div class="container">
+            <h1>Engineering Calculators</h1>
 
-        <p>
-            Free, fast, and privacy-friendly calculators for electrical engineering,
-            solar PV design, renewable energy systems, and technical analysis.
-        </p>
+            <p>
+                Free, fast, and privacy-friendly calculators for electrical engineering,
+                solar PV design, renewable energy systems, and technical analysis.
+            </p>
 
-        <div class="search-container">
-            <input
-                type="search"
-                id="search-box"
-                placeholder="Search calculators..."
-                autocomplete="off"
-                spellcheck="false"
-                aria-label="Search Engineering Calculators"/>
+            <div class="search-container">
+                <input
+                    type="search"
+                    id="search-box"
+                    placeholder="Search calculators..."
+                    autocomplete="off"
+                    spellcheck="false"
+                    role="combobox"
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    aria-controls="search-results"
+                    aria-haspopup="listbox"
+                    aria-label="Search Engineering Calculators"/>
 
-            <div
-                id="search-results"
-                class="search-results"
-                role="listbox"
-                aria-label="Search Results">
+                <div
+                    id="search-results"
+                    class="search-results"
+                    role="listbox"
+                    aria-label="Search Results">
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section id="calculators" class="container">
         <h2 class="section-title">All Engineering Calculators</h2>
@@ -122,58 +123,58 @@
             </a>
 
             <!-- Power Calculator -->
-            <a href="#" class="calc-card">
-                <div class="calc-icon">
-                    <span class="material-symbols-outlined">bolt</span>
-                </div>
-                <h3>Power Calculator</h3>
-                <p>Coming Soon</p>
-            </a>
+<a href="/calculators/power/" class="calc-card">
+    <div class="calc-icon">
+        <span class="material-symbols-outlined">bolt</span>
+    </div>
+    <h3>Power Calculator</h3>
+    <p>Calculate real, reactive, and apparent power, power factor, and three-phase electrical power parameters.</p>
+</a>
 
             <!-- Battery Calculator -->
-            <a href="#" class="calc-card">
+            <div class="calc-card coming-soon" aria-disabled="true">
                 <div class="calc-icon">
                     <span class="material-symbols-outlined">battery_charging_full</span>
                 </div>
                 <h3>Battery Calculator</h3>
                 <p>Coming Soon</p>
-            </a>
+            </div>
 
             <!-- Transformer Calculator -->
-            <a href="#" class="calc-card">
+            <div class="calc-card coming-soon" aria-disabled="true">
                 <div class="calc-icon">
                     <span class="material-symbols-outlined">hub</span>
                 </div>
                 <h3>Transformer Calculator</h3>
                 <p>Coming Soon</p>
-            </a>
+            </div>
 
             <!-- Motor Calculator -->
-            <a href="#" class="calc-card">
+            <div class="calc-card coming-soon" aria-disabled="true">
                 <div class="calc-icon">
                     <span class="material-symbols-outlined">mode_fan</span>
                 </div>
                 <h3>Motor Calculator</h3>
                 <p>Coming Soon</p>
-            </a>
+            </div>
 
             <!-- PV String Calculator -->
-            <a href="#" class="calc-card">
+            <div class="calc-card coming-soon" aria-disabled="true">
                 <div class="calc-icon">
                     <span class="material-symbols-outlined">grid_view</span>
                 </div>
                 <h3>PV String Calculator</h3>
                 <p>Coming Soon</p>
-            </a>
+            </div>
 
             <!-- Conduit Fill Calculator -->
-            <a href="#" class="calc-card">
+            <div class="calc-card coming-soon" aria-disabled="true">
                 <div class="calc-icon">
                     <span class="material-symbols-outlined">plumbing</span>
                 </div>
                 <h3>Conduit Fill Calculator</h3>
                 <p>Coming Soon</p>
-            </a>
+            </div>
         </div>
     </section>
 </main>
@@ -182,10 +183,10 @@
 <footer>
     <div class="container">
         <p>
-    © 2026 Engineering Calculator by 
-    <strong><a href="https://prasunbarua.com" target="_blank" rel="noopener noreferrer">Prasun Barua</a></strong>. 
-    All Rights Reserved.
-</p>
+            © 2026 Engineering Calculator by 
+            <strong><a href="https://prasunbarua.com" target="_blank" rel="noopener noreferrer">Prasun Barua</a></strong>. 
+            All Rights Reserved.
+        </p>
         <div class="footer-links">
             <a href="/">Home</a>
             <a href="/about/">About</a>
@@ -202,16 +203,16 @@
 <!-- Search Auto-complete Logic -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-
     const input = document.getElementById("search-box");
     const resultsBox = document.getElementById("search-results");
     const cards = [...document.querySelectorAll(".calc-card")];
 
+    // Filter only active calculator links for the dropdown
     const calculators = cards
-        .filter(card => card.getAttribute("href") && card.getAttribute("href") !== "#")
+        .filter(card => card.tagName === "A" && card.hasAttribute("href"))
         .map(card => ({
-            title: card.querySelector("h3").textContent.trim(),
-            description: card.querySelector("p").textContent.trim(),
+            title: card.querySelector("h3") ? card.querySelector("h3").textContent.trim() : "",
+            description: card.querySelector("p") ? card.querySelector("p").textContent.trim() : "",
             url: card.href,
             element: card
         }));
@@ -229,11 +230,22 @@ document.addEventListener("DOMContentLoaded", () => {
         })[m]);
     }
 
+    // Safe highlight matching that prevents breaking HTML entities
     function highlight(text, query) {
         if (!query) return escapeHTML(text);
         const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        const regex = new RegExp("(" + escaped + ")", "ig");
-        return escapeHTML(text).replace(regex, "<mark>$1</mark>");
+        const regex = new RegExp(escaped, "gi");
+        let result = "";
+        let lastIndex = 0;
+        let match;
+
+        while ((match = regex.exec(text)) !== null) {
+            result += escapeHTML(text.substring(lastIndex, match.index));
+            result += `<mark>${escapeHTML(match[0])}</mark>`;
+            lastIndex = regex.lastIndex;
+        }
+        result += escapeHTML(text.substring(lastIndex));
+        return result;
     }
 
     function filterCards(query) {
@@ -248,6 +260,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (query === "") {
             resultsBox.style.display = "none";
+            input.setAttribute("aria-expanded", "false");
+            input.removeAttribute("aria-activedescendant");
             activeIndex = -1;
             return;
         }
@@ -259,11 +273,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!matches.length) {
             resultsBox.innerHTML = `
-                <div class="no-results">
-                    No calculators found.
+                <div class="no-results" role="option" aria-selected="false">
+                    No active calculators found.
                 </div>
             `;
             resultsBox.style.display = "block";
+            input.setAttribute("aria-expanded", "true");
+            input.removeAttribute("aria-activedescendant");
             activeIndex = -1;
             return;
         }
@@ -271,10 +287,16 @@ document.addEventListener("DOMContentLoaded", () => {
         matches.forEach((calc, index) => {
             const item = document.createElement("div");
             item.className = "search-item";
+            item.id = `search-option-${index}`;
+            item.setAttribute("role", "option");
 
             if (index === 0) {
                 item.classList.add("active");
+                item.setAttribute("aria-selected", "true");
                 activeIndex = 0;
+                input.setAttribute("aria-activedescendant", item.id);
+            } else {
+                item.setAttribute("aria-selected", "false");
             }
 
             item.innerHTML = `
@@ -290,15 +312,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         resultsBox.style.display = "block";
+        input.setAttribute("aria-expanded", "true");
     }
 
     function updateSelection() {
         const items = resultsBox.querySelectorAll(".search-item");
-        items.forEach(item => item.classList.remove("active"));
+        items.forEach((item, idx) => {
+            const isActive = idx === activeIndex;
+            item.classList.toggle("active", isActive);
+            item.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
 
         if (activeIndex >= 0 && activeIndex < items.length) {
-            items[activeIndex].classList.add("active");
-            items[activeIndex].scrollIntoView({ block: "nearest" });
+            const activeItem = items[activeIndex];
+            activeItem.scrollIntoView({ block: "nearest" });
+            input.setAttribute("aria-activedescendant", activeItem.id);
+        } else {
+            input.removeAttribute("aria-activedescendant");
         }
     }
 
@@ -313,12 +343,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (e.key === "ArrowDown") {
             e.preventDefault();
-            activeIndex = Math.min(activeIndex + 1, matches.length - 1);
-            updateSelection();
+            if (matches.length > 0) {
+                activeIndex = Math.min(activeIndex + 1, matches.length - 1);
+                updateSelection();
+            }
         } else if (e.key === "ArrowUp") {
             e.preventDefault();
-            activeIndex = Math.max(activeIndex - 1, 0);
-            updateSelection();
+            if (matches.length > 0) {
+                activeIndex = Math.max(activeIndex - 1, 0);
+                updateSelection();
+            }
         } else if (e.key === "Enter") {
             e.preventDefault();
             if (activeIndex >= 0 && matches[activeIndex]) {
@@ -326,6 +360,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } else if (e.key === "Escape") {
             resultsBox.style.display = "none";
+            input.setAttribute("aria-expanded", "false");
+            input.removeAttribute("aria-activedescendant");
         }
     });
 
@@ -338,6 +374,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", e => {
         if (!e.target.closest(".search-container")) {
             resultsBox.style.display = "none";
+            input.setAttribute("aria-expanded", "false");
+            input.removeAttribute("aria-activedescendant");
         }
     });
 
@@ -350,4 +388,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
