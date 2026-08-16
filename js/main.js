@@ -7,22 +7,23 @@
  *
  * Responsibilities:
  *   1. Google-style instant search across calculator cards (with ranking,
- *      highlighting, keyboard navigation, and ARIA-compliant autocomplete).
- *   2. Mobile navigation menu toggling.
- *   3. Persisted light/dark theme switching.
+ *      highlighting, keyboard navigation, metadata indexing, and ARIA autocomplete).
+ *   2. Global keyboard shortcuts (Ctrl+K / Cmd+K or '/') to focus search.
+ *   3. Mobile navigation menu toggling.
+ *   4. Persisted light/dark theme switching with OS preference auto-detection.
  *
  * Design notes:
  *   - No frameworks or external libraries. Pure ES6+.
  *   - No untrusted string is ever passed to innerHTML. All dynamic markup
  *     (including <mark> highlighting) is built with DOM APIs
  *     (createElement / textContent) to eliminate XSS risk.
- *   - Every DOM lookup is defensive: missing elements degrade gracefully
- *     instead of throwing.
+ *   - Every DOM lookup is defensive: missing elements degrade gracefully.
  *
  * Expected markup contract (already provided by the page):
  *   #search-box        — <input> search field
  *   #search-results    — autocomplete dropdown container
- *   .calc-card         — calculator card links (title = h3, desc = p, url = href)
+ *   .calc-card         — calculator card links (title = h3, desc = p, url = href,
+ *                        optional data-keywords, data-category)
  *   #menu-btn / #main-nav — mobile navigation toggle
  *   #theme-toggle      — optional theme switch button (data-theme aware)
  * =============================================================================
@@ -46,8 +47,10 @@
     TITLE_STARTS_WITH: 1,
     TITLE_CONTAINS_PHRASE: 2,
     TITLE_CONTAINS_ALL_WORDS: 2.5,
+    KEYWORD_EXACT_MATCH: 2.8,
     DESCRIPTION_CONTAINS_PHRASE: 3,
     DESCRIPTION_CONTAINS_ALL_WORDS: 3.5,
+    KEYWORD_OR_CATEGORY_CONTAINS: 4,
     NO_MATCH: -1,
   });
 
@@ -112,11 +115,9 @@
 
   /**
    * Safely builds a DocumentFragment where every occurrence of any word in
-   * `words` is wrapped in a <mark> element. Never uses innerHTML — every
-   * fragment of text (including the untrusted query) is inserted via
-   * textContent / createTextNode, so no markup injection is possible.
+   * `words` is wrapped in a <mark> element.
    *
-   * @param {string} text - The source text to highlight (title or description).
+   * @param {string} text - The source text to highlight.
    * @param {string[]} words - Lowercased search terms to highlight.
    * @returns {DocumentFragment}
    */
@@ -126,7 +127,6 @@
     const cleanWords = (words || [])
       .map(escapeRegExp)
       .filter(Boolean)
-      // Match longer terms first so overlapping words highlight sensibly.
       .sort((a, b) => b.length - a.length);
 
     if (cleanWords.length === 0) {
@@ -149,7 +149,6 @@
 
       lastIndex = regex.lastIndex;
 
-      // Guard against zero-length matches causing an infinite loop.
       if (match[0].length === 0) {
         regex.lastIndex += 1;
       }
@@ -166,10 +165,7 @@
    * Search index
    * ========================================================================= */
 
-  /**
-   * Reads all .calc-card elements from the DOM once and caches a normalized
-   * search index. Cards missing a title are skipped defensively.
-   */
+  /** Reads all .calc-card elements and caches normalized metadata. */
   function buildSearchIndex() {
     state.calcCards = Array.from(document.querySelectorAll(".calc-card"));
 
@@ -180,45 +176,58 @@
 
         const title = titleEl && titleEl.textContent ? titleEl.textContent.trim() : "";
         const description = descEl && descEl.textContent ? descEl.textContent.trim() : "";
-        const url = card.getAttribute("href") || "";
+        const url = card.getAttribute("href") || card.dataset.href || "";
+        const keywords = card.dataset.keywords || "";
+        const category = card.dataset.category || "";
 
         return {
           title,
           description,
           url,
+          keywords,
+          category,
           titleLower: title.toLowerCase(),
           descLower: description.toLowerCase(),
+          keywordsLower: keywords.toLowerCase(),
+          categoryLower: category.toLowerCase(),
           card,
         };
       })
       .filter((entry) => entry.title.length > 0);
   }
 
-  /**
-   * Scores a single index entry against a query. Lower scores rank higher.
-   * @param {object} entry - Item from state.searchIndex.
-   * @param {string} queryLower - Lowercased full query.
-   * @param {string[]} words - Lowercased query words.
-   * @returns {number} RANK value, or RANK.NO_MATCH.
-   */
+  /** Scores a single index entry against a query. Lower scores rank higher. */
   function scoreEntry(entry, queryLower, words) {
-    const { titleLower, descLower } = entry;
+    const { titleLower, descLower, keywordsLower, categoryLower } = entry;
 
     if (titleLower === queryLower) return RANK.EXACT_TITLE;
     if (titleLower.startsWith(queryLower)) return RANK.TITLE_STARTS_WITH;
     if (titleLower.includes(queryLower)) return RANK.TITLE_CONTAINS_PHRASE;
     if (words.every((word) => titleLower.includes(word))) return RANK.TITLE_CONTAINS_ALL_WORDS;
+    
+    if (keywordsLower && keywordsLower.split(",").map((k) => k.trim()).includes(queryLower)) {
+      return RANK.KEYWORD_EXACT_MATCH;
+    }
+
     if (descLower.includes(queryLower)) return RANK.DESCRIPTION_CONTAINS_PHRASE;
     if (words.every((word) => descLower.includes(word))) return RANK.DESCRIPTION_CONTAINS_ALL_WORDS;
+
+    if (
+      words.every(
+        (word) =>
+          keywordsLower.includes(word) ||
+          categoryLower.includes(word) ||
+          titleLower.includes(word) ||
+          descLower.includes(word)
+      )
+    ) {
+      return RANK.KEYWORD_OR_CATEGORY_CONTAINS;
+    }
 
     return RANK.NO_MATCH;
   }
 
-  /**
-   * Searches the cached index and returns matching entries, ranked.
-   * @param {string} query - Raw (unsanitized) user input.
-   * @returns {object[]} Matching search index entries, best match first.
-   */
+  /** Searches the cached index and returns matching entries, ranked. */
   function searchCalculators(query) {
     const queryLower = query.trim().toLowerCase();
     if (!queryLower) return [];
@@ -245,7 +254,6 @@
    * Rendering
    * ========================================================================= */
 
-  /** Opens the autocomplete dropdown and syncs ARIA state. */
   function openDropdown() {
     if (!state.resultsContainer || !state.searchBox) return;
     state.resultsContainer.hidden = false;
@@ -253,7 +261,6 @@
     state.isOpen = true;
   }
 
-  /** Closes the autocomplete dropdown and syncs ARIA state. */
   function closeDropdown() {
     if (!state.resultsContainer || !state.searchBox) return;
     state.resultsContainer.hidden = true;
@@ -263,9 +270,6 @@
     state.activeIndex = -1;
   }
 
-  /**
-   * Renders the "no calculators found" message.
-   */
   function renderNoResults() {
     const empty = document.createElement("div");
     empty.className = "no-results";
@@ -274,15 +278,9 @@
     openDropdown();
   }
 
-  /**
-   * Renders the ranked, highlighted result list into the dropdown.
-   * @param {object[]} results - Ranked search index entries.
-   * @param {string} query - Raw query used for highlighting.
-   */
   function renderResults(results, query) {
     if (!state.resultsContainer || !state.searchBox) return;
 
-    // Clear previous results (safe: no user content involved).
     state.resultsContainer.textContent = "";
     state.activeIndex = -1;
 
@@ -321,11 +319,6 @@
     openDropdown();
   }
 
-  /**
-   * Shows/hides the main .calc-card grid entries to reflect the active
-   * search query.
-   * @param {object[]} results - Ranked search index entries considered a match.
-   */
   function filterCalcCardGrid(results) {
     if (state.calcCards.length === 0) return;
 
@@ -335,7 +328,6 @@
     });
   }
 
-  /** Restores all calculator cards to visible (used when query is cleared). */
   function resetCalcCardGrid() {
     state.calcCards.forEach((card) => {
       card.style.display = "";
@@ -346,18 +338,11 @@
    * Active item / keyboard & mouse interaction
    * ========================================================================= */
 
-  /** @returns {HTMLElement[]} Currently rendered result option elements. */
   function getResultItems() {
     if (!state.resultsContainer) return [];
     return Array.from(state.resultsContainer.querySelectorAll(".search-item"));
   }
 
-  /**
-   * Marks the item at `index` as active, updates ARIA attributes, and
-   * scrolls it into view if necessary.
-   * @param {number} index
-   * @param {HTMLElement[]} [itemsOverride]
-   */
   function setActiveItem(index, itemsOverride) {
     const items = itemsOverride || getResultItems();
     if (items.length === 0) return;
@@ -377,10 +362,6 @@
     }
   }
 
-  /**
-   * Moves the active selection up or down, wrapping at the ends.
-   * @param {number} delta - +1 for down, -1 for up.
-   */
   function moveActiveItem(delta) {
     const items = getResultItems();
     if (items.length === 0) return;
@@ -392,14 +373,12 @@
     setActiveItem(nextIndex, items);
   }
 
-  /** Navigates the browser to a calculator URL, defensively. */
   function navigateTo(url) {
     if (typeof url === "string" && url.length > 0) {
       window.location.href = url;
     }
   }
 
-  /** Opens the currently active (or sole) result, if any. */
   function activateSelection() {
     const items = getResultItems();
     if (items.length === 0) return;
@@ -414,27 +393,39 @@
     }
   }
 
-  /**
-   * Central keydown handler for the search box.
-   * @param {KeyboardEvent} event
-   */
   function handleSearchKeydown(event) {
-    if (!state.isOpen && event.key !== "Escape") {
+    if (!state.isOpen && event.key !== "Escape" && event.key !== "ArrowDown") {
       return;
     }
 
     switch (event.key) {
       case "ArrowDown":
         event.preventDefault();
+        if (!state.isOpen) openDropdown();
         moveActiveItem(1);
         break;
       case "ArrowUp":
         event.preventDefault();
         moveActiveItem(-1);
         break;
+      case "Home":
+        if (state.isOpen && state.activeIndex >= 0) {
+          event.preventDefault();
+          setActiveItem(0);
+        }
+        break;
+      case "End":
+        if (state.isOpen && state.activeIndex >= 0) {
+          event.preventDefault();
+          const items = getResultItems();
+          setActiveItem(items.length - 1, items);
+        }
+        break;
       case "Enter":
-        event.preventDefault();
-        activateSelection();
+        if (state.isOpen) {
+          event.preventDefault();
+          activateSelection();
+        }
         break;
       case "Escape":
         closeDropdown();
@@ -444,7 +435,6 @@
     }
   }
 
-  /** Handles clicks within the results dropdown via event delegation. */
   function handleResultsClick(event) {
     const item = event.target.closest(".search-item");
     if (item && item.dataset.url) {
@@ -452,7 +442,6 @@
     }
   }
 
-  /** Updates active selection on hover via event delegation. */
   function handleResultsMouseOver(event) {
     const item = event.target.closest(".search-item");
     if (!item) return;
@@ -464,11 +453,31 @@
     }
   }
 
+  /** Global keydown handler to focus search via '/' or 'Cmd/Ctrl + K' */
+  function initGlobalHotkeys() {
+    document.addEventListener("keydown", (event) => {
+      const activeEl = document.activeElement;
+      const isInput =
+        activeEl &&
+        (["INPUT", "TEXTAREA", "SELECT"].includes(activeEl.tagName) || activeEl.isContentEditable);
+
+      if (
+        (event.key === "/" && !isInput) ||
+        ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k")
+      ) {
+        if (state.searchBox) {
+          event.preventDefault();
+          state.searchBox.focus();
+          state.searchBox.select();
+        }
+      }
+    });
+  }
+
   /** =========================================================================
    * Search input orchestration
    * ========================================================================= */
 
-  /** Executes a full search-and-render cycle for the current input value. */
   function performSearch() {
     if (!state.searchBox) return;
 
@@ -490,29 +499,24 @@
     filterCalcCardGrid(results);
   }
 
-  /** Re-opens the dropdown with cached results when the field regains focus. */
   function handleSearchFocus() {
     if (state.lastQuery && state.lastResults.length >= 0 && state.searchBox.value.trim()) {
       renderResults(state.lastResults, state.lastQuery);
     }
   }
 
-  /** Closes the dropdown when the user clicks anywhere outside it. */
   function handleDocumentClick(event) {
     if (!state.isOpen) return;
     if (!state.searchBox || !state.resultsContainer) return;
 
     const target = event.target;
-    const clickedInsideSearch = state.searchBox.contains(target) || state.resultsContainer.contains(target);
+    const clickedInsideSearch =
+      state.searchBox.contains(target) || state.resultsContainer.contains(target);
 
     if (!clickedInsideSearch) {
       closeDropdown();
     }
   }
-
-  /** =========================================================================
-   * Search module bootstrap
-   * ========================================================================= */
 
   function initSearch() {
     state.searchBox = document.getElementById("search-box");
@@ -544,6 +548,7 @@
     state.resultsContainer.addEventListener("mouseover", handleResultsMouseOver);
 
     document.addEventListener("click", handleDocumentClick);
+    initGlobalHotkeys();
   }
 
   /** =========================================================================
@@ -579,10 +584,6 @@
    * Theme system
    * ========================================================================= */
 
-  /**
-   * Applies a theme to the document and persists the preference.
-   * @param {"light"|"dark"} theme
-   */
   function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
 
@@ -593,19 +594,47 @@
     }
   }
 
-  /** Loads and applies any previously saved theme preference. */
+  function getSystemTheme() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? CONFIG.THEME_DARK
+      : CONFIG.THEME_LIGHT;
+  }
+
   function loadSavedTheme() {
     try {
       const saved = localStorage.getItem(CONFIG.THEME_STORAGE_KEY);
       if (saved === CONFIG.THEME_LIGHT || saved === CONFIG.THEME_DARK) {
         document.documentElement.dataset.theme = saved;
+      } else {
+        document.documentElement.dataset.theme = getSystemTheme();
       }
     } catch (err) {
       console.warn("Unable to read theme preference:", err);
+      document.documentElement.dataset.theme = getSystemTheme();
     }
   }
 
-  /** Wires up an optional theme toggle button, if present on the page. */
+  function watchSystemThemeChanges() {
+    if (!window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e) => {
+      try {
+        if (!localStorage.getItem(CONFIG.THEME_STORAGE_KEY)) {
+          applyTheme(e.matches ? CONFIG.THEME_DARK : CONFIG.THEME_LIGHT);
+        }
+      } catch (err) {
+        /* Ignore storage errors */
+      }
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleChange);
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(handleChange);
+    }
+  }
+
   function initThemeToggle() {
     const themeBtn = document.getElementById("theme-toggle");
     if (!themeBtn) return;
@@ -623,6 +652,7 @@
   function init() {
     try {
       loadSavedTheme();
+      watchSystemThemeChanges();
     } catch (err) {
       console.error("Theme initialization failed:", err);
     }
@@ -654,5 +684,7 @@
 
   window.CalculatorSearch = Object.freeze({
     rebuildIndex: buildSearchIndex,
+    performSearch: performSearch,
+    setTheme: applyTheme,
   });
 })();
