@@ -1,1 +1,754 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D5NNN0SFP0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-D5NNN0SFP0');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Calculator — Prasun Tools</title>
+    <meta name="description" content="Free Electrical Power Calculator to find power, voltage, current, and power factor for DC, 1-Phase AC, and 3-Phase AC circuits.">
+    
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://tools.prasunbarua.com/tools/power-calculator.html">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Power Calculator — Prasun Tools">
+    <meta property="og:description" content="Calculate electrical power, voltage, current, and power factor for DC, 1-Phase AC, and 3-Phase AC systems.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tools.prasunbarua.com/tools/power-calculator.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    
+    <!-- Google Fonts & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/tool-page.css">
+    
+    <!-- Global Theme Initializer Script -->
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+
+    <style>
+        /* Engineering Platform UI Enhancements */
+        :root {
+            --bg-main: #ffffff;
+            --bg-secondary: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-light: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --brand-blue: #2563eb;
+            --brand-blue-hover: #1d4ed8;
+            --brand-blue-light: #eff6ff;
+            --success-bg: #f0fdf4;
+            --success-text: #166534;
+            --success-border: #bbf7d0;
+            
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-full: 9999px;
+            --transition-smooth: 0.2s ease;
+            --container-width: 1100px;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #020617;
+            --bg-secondary: #0f172a;
+            --surface: #0f172a;
+            --surface-hover: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-light: #1e293b;
+            --border-hover: #334155;
+            --brand-blue: #3b82f6;
+            --brand-blue-hover: #60a5fa;
+            --brand-blue-light: rgba(59, 130, 246, 0.1);
+            --success-bg: rgba(22, 101, 52, 0.2);
+            --success-text: #4ade80;
+            --success-border: rgba(74, 222, 128, 0.3);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header Navigation */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border-light);
+            backdrop-filter: blur(12px);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            color: var(--brand-blue);
+            font-size: 1.375rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: var(--radius-full);
+            transition: background var(--transition-smooth), color var(--transition-smooth);
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+        }
+
+        /* Tool Main Area */
+        .tool-main {
+            padding: 2.5rem 0 4rem;
+        }
+
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+
+        .tool-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            background: var(--brand-blue-light);
+            color: var(--brand-blue);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .tool-badge-pill .material-symbols-outlined {
+            font-size: 1rem;
+        }
+
+        .tool-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.375rem;
+            color: var(--text-primary);
+        }
+
+        .tool-header p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+
+        /* Workspace Grid: Calculator + Reference Sidebar */
+        .tool-workspace {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .tool-workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Calculator Card */
+        .calculator-card {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .form-section-group {
+            border: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title-tag {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: var(--brand-blue);
+            color: #ffffff;
+            font-size: 0.75rem;
+            border-radius: var(--radius-full);
+        }
+
+        .input-row-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            align-items: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            transition: border-color var(--transition-smooth);
+        }
+
+        .input-row-card:focus-within {
+            border-color: var(--brand-blue);
+        }
+
+        @media (max-width: 540px) {
+            .input-row-card {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+
+        .select-group label, .select-group .input-hint {
+            display: block;
+        }
+
+        .select-group label {
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .input-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.125rem;
+        }
+
+        .input-field-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-field-wrapper select,
+        .input-field-wrapper input {
+            width: 100%;
+            height: 44px;
+            padding: 0 2.25rem 0 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: all var(--transition-smooth);
+            appearance: none;
+        }
+
+        .input-field-wrapper input {
+            padding: 0 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .input-field-wrapper select:focus,
+        .input-field-wrapper input:focus {
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            font-size: 20px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition-smooth);
+        }
+
+        .primary-btn {
+            background: var(--brand-blue);
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(37,99,235,0.2);
+        }
+
+        .primary-btn:hover {
+            background: var(--brand-blue-hover);
+        }
+
+        .secondary-btn {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .secondary-btn:hover {
+            border-color: var(--border-hover);
+            background: var(--border-light);
+        }
+
+        /* Results Box */
+        .results-box {
+            margin-top: 1.5rem;
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            border-radius: var(--radius-md);
+            padding: 1.25rem 1.5rem;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--success-text);
+        }
+
+        .results-header h3 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+
+        .success-icon {
+            font-size: 20px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .result-item {
+            background: var(--surface);
+            border: 1px solid var(--success-border);
+            border-radius: 8px;
+            padding: 0.875rem 1rem;
+        }
+
+        .result-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Formula Reference Sidebar */
+        .info-card {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .info-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .formula-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+        }
+
+        .formula-list li {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .formula-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .formula-name {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .formula-eq {
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            color: var(--brand-blue);
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border-light);
+            padding: 2.5rem 0;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            background: var(--bg-secondary);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .privacy-badge .material-symbols-outlined {
+            font-size: 16px;
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8736637194399168"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo" aria-label="Prasun Tools Home">
+                <span class="material-symbols-outlined logo-icon" aria-hidden="true">bolt</span>
+                <span>Prasun Tools</span>
+            </a>
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="/">Home</a>
+                <a href="/#tools-grid">All Tools</a>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark and light mode">
+                    <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Tool Container -->
+    <main class="container tool-main">
+        <div class="tool-header">
+            <div class="tool-badge-pill">
+                <span class="material-symbols-outlined" aria-hidden="true">electrical_services</span>
+                <span>Electrical Engineering</span>
+            </div>
+            <h1>Power Calculator</h1>
+            <p>Calculate electrical power, voltage, current, or power factor for DC, 1-Phase AC, and 3-Phase AC systems.</p>
+        </div>
+
+        <div class="tool-workspace">
+            <!-- Calculator Card -->
+            <div class="calculator-card">
+                <form class="calculator-inner" id="power-form" onsubmit="return false;">
+                    
+                    <!-- Step 1: System Configuration -->
+                    <fieldset class="form-section-group">
+                        <legend class="section-title-tag">
+                            <span class="step-number">1</span> System Configuration
+                        </legend>
+
+                        <div class="input-row-card">
+                            <div class="select-group">
+                                <label for="system-type">System Type</label>
+                                <span class="input-hint">Select DC or AC configuration</span>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field-wrapper select-wrapper">
+                                    <select id="system-type" name="system-type">
+                                        <option value="dc" selected>DC (Direct Current)</option>
+                                        <option value="1phase">1-Phase AC</option>
+                                        <option value="3phase">3-Phase AC</option>
+                                    </select>
+                                    <span class="material-symbols-outlined select-arrow" aria-hidden="true">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-row-card">
+                            <div class="select-group">
+                                <label for="calc-target">Calculate For</label>
+                                <span class="input-hint">Select target unknown parameter</span>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field-wrapper select-wrapper">
+                                    <select id="calc-target" name="calc-target">
+                                        <option value="power" selected>Power (P)</option>
+                                        <option value="voltage">Voltage (V)</option>
+                                        <option value="current">Current (I)</option>
+                                        <option value="pf" id="pf-target-opt" style="display: none;">Power Factor (PF)</option>
+                                    </select>
+                                    <span class="material-symbols-outlined select-arrow" aria-hidden="true">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Step 2: Known Parameters -->
+                    <fieldset class="form-section-group">
+                        <legend class="section-title-tag">
+                            <span class="step-number">2</span> Known Parameters
+                        </legend>
+
+                        <!-- Dynamic Input Rows (Populated or Toggled via JS) -->
+                        <div class="input-row-card" id="row-voltage">
+                            <div class="select-group">
+                                <label for="val-voltage">Voltage (V)</label>
+                                <span class="input-hint">Enter potential difference in Volts</span>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field-wrapper">
+                                    <input type="number" id="val-voltage" name="val-voltage" placeholder="0.00" step="any">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-row-card" id="row-current">
+                            <div class="select-group">
+                                <label for="val-current">Current (I)</label>
+                                <span class="input-hint">Enter current flow in Amperes</span>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field-wrapper">
+                                    <input type="number" id="val-current" name="val-current" placeholder="0.00" step="any">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-row-card" id="row-power" style="display: none;">
+                            <div class="select-group">
+                                <label for="val-power">Power (P)</label>
+                                <span class="input-hint">Enter real power in Watts</span>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field-wrapper">
+                                    <input type="number" id="val-power" name="val-power" placeholder="0.00" step="any">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-row-card" id="row-pf" style="display: none;">
+                            <div class="select-group">
+                                <label for="val-pf">Power Factor (PF)</label>
+                                <span class="input-hint">Value between 0.0 and 1.0</span>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field-wrapper">
+                                    <input type="number" id="val-pf" name="val-pf" placeholder="0.85" min="0" max="1" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button type="button" id="calc-btn" class="btn primary-btn">
+                            <span class="material-symbols-outlined" aria-hidden="true">calculate</span> Calculate Results
+                        </button>
+                        <button type="reset" id="reset-btn" class="btn secondary-btn">
+                            <span class="material-symbols-outlined" aria-hidden="true">restart_alt</span> Reset
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Results Display Section -->
+                <div id="results-section" class="results-box" style="display: none;" aria-live="polite">
+                    <div class="results-header">
+                        <span class="material-symbols-outlined success-icon" aria-hidden="true">check_circle</span>
+                        <h3>Calculated Results</h3>
+                    </div>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <span class="result-label" id="res-label-1">Active Power (P)</span>
+                            <span class="result-value" id="res-val-1">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label" id="res-label-2">Apparent Power (S)</span>
+                            <span class="result-value" id="res-val-2">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formula Reference Sidebar Card -->
+            <aside class="info-card" aria-label="Formula Reference">
+                <div class="info-header">
+                    <span class="material-symbols-outlined" aria-hidden="true">engineering</span>
+                    <h3>Power Formulas</h3>
+                </div>
+                <ul class="formula-list">
+                    <li>
+                        <span class="formula-name">DC Power</span>
+                        <span class="formula-eq">P = V × I</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">1-Phase AC Real Power</span>
+                        <span class="formula-eq">P = V × I × PF</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">3-Phase AC Real Power</span>
+                        <span class="formula-eq">P = √3 × V × I × PF</span>
+                    </li>
+                    <li>
+                        <span class="formula-name">Apparent Power (S)</span>
+                        <span class="formula-eq">S = V × I &nbsp;|&nbsp; S = √3 × V × I</span>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p>
+                &copy; 2026 Tools by
+                <a href="https://www.prasunbarua.com"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Prasun Barua
+                </a>.
+                All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Tool Logic Scripts -->
+    <script src="../assets/js/tools/power-calculator.js" defer></script>
+    <script src="../assets/js/app.js" defer></script>
+</body>
+</html>
